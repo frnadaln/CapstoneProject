@@ -9,6 +9,7 @@
     <string name="search_icon">Search Icon</string>
     <string name="background_image_desc">Background Image Home</string>
     <string name="overlay_image_desc">Overlay Image Home</string>
+    <string name="empty_history">No History Found</string>
 
     <string name="title_past">الماضي المعلوم</string>
     <string name="title_present">المضارع المعلوم</string>
@@ -20,4 +21,6 @@
     <string name="description_will_be_shown_here">Description Result</string>
     <string name="word_not_found_please_try_again">Word Not Found</string>
     <string name="icon_desc">icon desciption</string>
+    <string name="favourite">Favourite</string>
+    <string name="empty_favourite">No Favourite Found</string>
 </resources>
