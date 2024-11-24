@@ -48,5 +48,8 @@
     <string name="menu_detector">Jamid Detector</string>
     <string name="menu_setting">Setting</string>
     <string name="menu_info">App Info</string>
+    <string name="setting">Setting</string>
+    <string name="daily_notification">Daily Notification</string>
+    <string name="set_notification_for_nearest_event_date">Set Notification for Nearest Event Date</string>
 
 </resources>

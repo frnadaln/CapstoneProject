@@ -2,22 +2,6 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/nav_verb_conjugator"
-<<<<<<< HEAD
-        android:icon="@drawable/ic_verb"
-        android:title="@string/verb_conjugator" />
-    <item
-        android:id="@+id/nav_jamid_detector"
-        android:icon="@drawable/ic_jamid"
-        android:title="@string/jamid_detector" />
-    <item
-        android:id="@+id/nav_setting"
-        android:icon="@drawable/ic_setting"
-        android:title="@string/setting" />
-    <item
-        android:id="@+id/nav_app_info"
-        android:icon="@drawable/ic_info"
-        android:title="@string/app_info" />
-=======
         android:icon="@drawable/icon_search"
         android:title="@string/menu_conjugator" />
     <item
@@ -32,5 +16,4 @@
         android:id="@+id/nav_app_info"
         android:icon="@drawable/ic_info"
         android:title="@string/menu_info" />
->>>>>>> ef6a1fa5a680d7ca3ae031eb1e30265cd4698b9f
 </menu>
