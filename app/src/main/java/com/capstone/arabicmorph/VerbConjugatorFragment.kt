@@ -1,6 +1,7 @@
 package com.capstone.arabicmorph
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -23,7 +24,18 @@ class VerbConjugatorFragment : Fragment() {
     private lateinit var recyclerView: RecyclerView
     private lateinit var adapter: ConjugatorResultAdapter
     private lateinit var floatingButton: ImageView
+    private lateinit var menuIcon: ImageView
     private val data = mutableListOf<Array<String>>()
+    private var drawerToggleListener: DrawerToggleListener? = null
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        if (context is DrawerToggleListener) {
+            drawerToggleListener = context
+        } else {
+            throw RuntimeException("$context must implement DrawerToggleListener")
+        }
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -35,6 +47,7 @@ class VerbConjugatorFragment : Fragment() {
         resultLayout = view.findViewById(R.id.result_layout)
         recyclerView = view.findViewById(R.id.recycler_view_results)
         floatingButton = view.findViewById(R.id.floating_button)
+        menuIcon = view.findViewById(R.id.menu_icon)
 
         recyclerView.layoutManager = LinearLayoutManager(context)
         adapter = ConjugatorResultAdapter(data)
@@ -56,6 +69,10 @@ class VerbConjugatorFragment : Fragment() {
 
         floatingButton.setOnClickListener {
             Toast.makeText(context, "Ditambahkan ke Favorit", Toast.LENGTH_SHORT).show()
+        }
+
+        menuIcon.setOnClickListener {
+            drawerToggleListener?.onMenuIconClicked()
         }
 
         return view
@@ -91,5 +108,14 @@ class VerbConjugatorFragment : Fragment() {
     private fun showResultsLayout() {
         initialLayout.visibility = View.GONE
         resultLayout.visibility = View.VISIBLE
+    }
+
+    override fun onDetach() {
+        super.onDetach()
+        drawerToggleListener = null
+    }
+
+    interface DrawerToggleListener {
+        fun onMenuIconClicked()
     }
 }

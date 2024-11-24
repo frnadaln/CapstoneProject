@@ -7,7 +7,7 @@ import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import com.google.android.material.navigation.NavigationView
 
-class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
+class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener, VerbConjugatorFragment.DrawerToggleListener {
 
     private lateinit var drawerLayout: DrawerLayout
 
@@ -15,20 +15,23 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val toolbar: androidx.appcompat.widget.Toolbar = findViewById(R.id.toolbar)
-        setSupportActionBar(toolbar)
-
         drawerLayout = findViewById(R.id.drawer_layout)
         val navigationView: NavigationView = findViewById(R.id.navigation_view)
 
-        val toggle = androidx.appcompat.app.ActionBarDrawerToggle(
-            this, drawerLayout, toolbar,
-            R.string.navigation_drawer_open, R.string.navigation_drawer_close
-        )
-        drawerLayout.addDrawerListener(toggle)
-        toggle.syncState()
-
         navigationView.setNavigationItemSelectedListener(this)
+
+        // Set default fragment
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.main_content, VerbConjugatorFragment())
+            .commit()
+    }
+
+    override fun onMenuIconClicked() {
+        if (!drawerLayout.isDrawerOpen(GravityCompat.START)) {
+            drawerLayout.openDrawer(GravityCompat.START)
+        } else {
+            drawerLayout.closeDrawer(GravityCompat.START)
+        }
     }
 
     override fun onBackPressed() {
