@@ -1,3 +1,12 @@
 <resources>
     <string name="app_name">ArabicMorph</string>
+    <string name="arabic_morph"><u>Arabic Morph</u></string>
+    <string name="enter_word">Enter word in Fusha Arabic</string>
+    <string name="discover_text">Discover the Beauty of Arabic Morphology!</string>
+    <string name="need_help">Need some help?</string>
+    <string name="menu_icon">Menu Icon</string>
+    <string name="help_icon">Help Icon</string>
+    <string name="search_icon">Search Icon</string>
+    <string name="background_image_desc">Background Image Home</string>
+    <string name="overlay_image_desc">Overlay Image Home</string>
 </resources>
