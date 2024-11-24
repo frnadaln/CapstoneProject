@@ -1,6 +1,106 @@
-<?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/container"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <RelativeLayout
+        android:id="@+id/layout_initial"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/background_color">
+
+        <ImageView
+            android:id="@+id/menu_icon"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginStart="14dp"
+            android:layout_marginTop="20dp"
+            android:layout_alignParentStart="true"
+            android:src="@drawable/icon_menu" />
+
+        <TextView
+            android:id="@+id/jamid_detec"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="110dp"
+            android:text="@string/jamid_detect"
+            android:textStyle="bold"
+            android:fontFamily="sans-serif"
+            android:textSize="20sp"
+            android:textColor="@color/text_secondary" />
+
+        <RelativeLayout
+            android:id="@+id/search_bar_container"
+            android:layout_width="322dp"
+            android:layout_height="42dp"
+            android:layout_marginTop="180dp"
+            android:layout_centerHorizontal="true"
+            android:background="@drawable/search_bg">
+
+            <EditText
+                android:id="@+id/enter_word"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="50dp"
+                android:background="@null"
+                android:hint="@string/enter_word"
+                android:textSize="14sp"
+                tools:ignore="TouchTargetSizeCheck" />
+
+            <FrameLayout
+                android:id="@+id/search_button_background"
+                android:layout_width="53dp"
+                android:layout_height="42dp"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="2dp"
+                android:background="@drawable/rectangle_3">
+
+                <ImageView
+                    android:id="@+id/search_icon"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/icon_search"
+                    android:tint="@android:color/white"
+                    tools:ignore="UseAppTint" />
+            </FrameLayout>
+        </RelativeLayout>
+
+        <FrameLayout
+            android:id="@+id/image_stack"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true">
+
+            <ImageView
+                android:id="@+id/background_image"
+                android:layout_width="206dp"
+                android:layout_height="128dp"
+                android:layout_gravity="center"
+                android:src="@drawable/background_image" />
+
+            <ImageView
+                android:id="@+id/overlay_image"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_gravity="center"
+                android:src="@drawable/overlay_image" />
+        </FrameLayout>
+
+        <TextView
+            android:id="@+id/reveal_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="459dp"
+            android:layout_centerHorizontal="true"
+            android:textSize="13sp"
+            android:textStyle="bold"
+            android:text="@string/reveal_text" />
+    </RelativeLayout>
+</FrameLayout>

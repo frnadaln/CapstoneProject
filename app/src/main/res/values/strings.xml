@@ -14,4 +14,6 @@
     <string name="title_present">المضارع المعلوم</string>
     <string name="title_command">الأمر</string>
     <string name="add_to_favorite">Tambah ke Favorit</string>
+    <string name="jamid_detect">Jamid Detector\n</string>
+    <string name="reveal_text">Reveal the True Nature: Jāmid or Musytaq?</string>
 </resources>
