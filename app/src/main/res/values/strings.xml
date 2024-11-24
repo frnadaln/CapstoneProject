@@ -23,4 +23,7 @@
     <string name="icon_desc">icon desciption</string>
     <string name="favourite">Favourite</string>
     <string name="empty_favourite">No Favourite Found</string>
+    <string name="word_history">Arabic Word</string>
+    <string name="word_favourite">Arabic Word</string>
+    <string name="country_label">Ar</string>
 </resources>
