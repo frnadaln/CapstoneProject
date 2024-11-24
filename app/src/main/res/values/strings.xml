@@ -37,17 +37,16 @@
     <string name="about_description">ArabicMorph is a mobile application designed to help users understand and analyze the morphology of Arabic words. Users can enter a single Arabic word in Fusha to generate various forms of the word, as well as detect whether the word is a jamid (non-derived word) or musytaq (derived word).</string>
     <string name="user_manual_title">User Manual</string>
     <string name="verb_conjugator_title">Verb Conjugator</string>
-    <string name="verb_conjugator_description" tools:ignore="StringEscaping">Input a Fusha Arabic word, then click the search icon to start conjugating.</string>
+    <string name="verb_conjugator_description">Input a Fusha Arabic word, then click the search icon to start conjugating.</string>
     <string name="jamid_detector_title">Jamid Detector</string>
-    <string name="jamid_detector_description" tools:ignore="StringEscaping">Input a Fusha Arabic word, then click the search icon to start detecting.</string>
+    <string name="jamid_detector_description">Input a Fusha Arabic word, then click the search icon to start detecting.</string>
     <string name="favourite_title">Favourite</string>
-    <string name="favourite_description" tools:ignore="StringEscaping">Click the star icon at the bottom of the screen to add to favourites.</string>
+    <string name="favourite_description">Click the star icon at the bottom of the screen to add to favorites.</string>
     <string name="history_title">History</string>
     <string name="history_description">Automatically fills in when doing Verb Conjugation or Jamid Detection.</string>
-    <string name="setting">Setting</string>
-    <string name="daily_notification">Daily Notification</string>
-    <string name="set_notification_for_nearest_event_date">Set Notification for Nearest Event Date</string>
-    <string name="verb_conjugator">Verb Conjugator</string>
-    <string name="jamid_detector">Jamid Detector</string>
-    <string name="app_info">App Info</string>
+    <string name="menu_conjugator">Verb Conjugator</string>
+    <string name="menu_detector">Jamid Detector</string>
+    <string name="menu_setting">Setting</string>
+    <string name="menu_info">App Info</string>
+
 </resources>
