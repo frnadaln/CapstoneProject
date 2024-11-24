@@ -3,17 +3,17 @@
     <item
         android:id="@+id/nav_verb_conjugator"
         android:icon="@drawable/ic_verb"
-        android:title="Verb Conjugator" />
+        android:title="@string/verb_conjugator" />
     <item
         android:id="@+id/nav_jamid_detector"
         android:icon="@drawable/ic_jamid"
-        android:title="Jamid Detector" />
+        android:title="@string/jamid_detector" />
     <item
         android:id="@+id/nav_setting"
-        android:icon="@drawable/ic_settings"
-        android:title="Setting" />
+        android:icon="@drawable/ic_setting"
+        android:title="@string/setting" />
     <item
         android:id="@+id/nav_app_info"
         android:icon="@drawable/ic_info"
-        android:title="App Info" />
+        android:title="@string/app_info" />
 </menu>
