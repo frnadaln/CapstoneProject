@@ -1,6 +1,6 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <string name="app_name">ArabicMorph</string>
-    <string name="arabic_morph"><u>Arabic Morph</u></string>
+    <string name="arabic_morph">Arabic Morph</string>
     <string name="enter_word">Enter word in Fusha Arabic</string>
     <string name="discover_text">Discover the Beauty of Arabic Morphology!</string>
     <string name="need_help">Need some help?</string>
@@ -18,13 +18,13 @@
     <string name="title_past">الماضي المعلوم</string>
     <string name="title_present">المضارع المعلوم</string>
     <string name="title_command">الأمر</string>
-    <string name="add_to_favorite">Tambah ke Favorit</string>
+    <string name="add_to_favorite">Add to Favourite</string>
     <string name="jamid_detect">Jamid Detector</string>
     <string name="reveal_text">Reveal the True Nature: Jāmid or Musytaq?</string>
     <string name="result_word">Detector Result</string>
     <string name="description_will_be_shown_here">Description Result</string>
     <string name="word_not_found_please_try_again">Word Not Found</string>
-    <string name="icon_desc">icon desciption</string>
+    <string name="icon_desc">Icon description</string>
     <string name="favourite">Favourite</string>
     <string name="empty_favourite">No Favourite Found</string>
     <string name="word_history">Arabic Word</string>
@@ -33,7 +33,7 @@
 
     <string name="back">Back</string>
     <string name="app_info_title">App Info</string>
-    <string name="about_title"><u>About Arabic Morph</u></string>
+    <string name="about_title">About Arabic Morph</string>
     <string name="about_description">ArabicMorph is a mobile application designed to help users understand and analyze the morphology of Arabic words. Users can enter a single Arabic word in Fusha to generate various forms of the word, as well as detect whether the word is a jamid (non-derived word) or musytaq (derived word).</string>
     <string name="user_manual_title">User Manual</string>
     <string name="verb_conjugator_title">Verb Conjugator</string>
@@ -48,5 +48,8 @@
     <string name="menu_detector">Jamid Detector</string>
     <string name="menu_setting">Setting</string>
     <string name="menu_info">App Info</string>
+    <string name="setting">Setting</string>
+    <string name="daily_notification">Daily Notification</string>
+    <string name="set_notification_for_nearest_event_date">Set Notification for Nearest Event Date</string>
 
 </resources>

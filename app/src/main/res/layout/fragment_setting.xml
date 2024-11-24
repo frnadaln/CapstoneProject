@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
@@ -19,14 +20,14 @@
             android:layout_height="24dp"
             android:layout_marginStart="16dp"
             android:src="@drawable/ic_back"
-            android:contentDescription="Back" />
+            android:contentDescription="@string/back" />
 
         <TextView
             android:id="@+id/toolbar_title_setting"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:text="Setting"
+            android:text="@string/setting"
             android:textColor="@android:color/black"
             android:textSize="20sp"
             android:fontFamily="sans-serif-medium" />
@@ -50,7 +51,7 @@
                 android:id="@+id/daily_notif"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Daily Notification"
+                android:text="@string/daily_notification"
                 android:textAppearance="@style/TextAppearance.AppCompat.Medium"
                 android:textColor="@android:color/black"
                 android:fontFamily="sans-serif-medium" />
@@ -60,7 +61,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
-                android:text="Set Notification for Nearest Event Date"
+                android:text="@string/set_notification_for_nearest_event_date"
                 android:textAppearance="@style/TextAppearance.AppCompat.Small"
                 android:textColor="@color/text_gray"
                 android:fontFamily="sans-serif" />
@@ -72,6 +73,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:thumbTint="@color/switch_thumb"
-            android:trackTint="@color/switch_track" />
+            android:trackTint="@color/switch_track"
+            tools:ignore="TouchTargetSizeCheck" />
     </LinearLayout>
 </LinearLayout>
