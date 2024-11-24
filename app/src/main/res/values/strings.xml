@@ -16,4 +16,8 @@
     <string name="add_to_favorite">Tambah ke Favorit</string>
     <string name="jamid_detect">Jamid Detector</string>
     <string name="reveal_text">Reveal the True Nature: Jāmid or Musytaq?</string>
+    <string name="result_word">Detector Result</string>
+    <string name="description_will_be_shown_here">Description Result</string>
+    <string name="word_not_found_please_try_again">Word Not Found</string>
+    <string name="icon_desc">icon desciption</string>
 </resources>

@@ -5,4 +5,5 @@
     <color name="text_secondary">#054B90</color>
     <color name="button_background">#E7EFFC</color>
     <color name="help_button_background">#EECACA</color>
+    <color name="error_color">#BF3B3D</color>
 </resources>

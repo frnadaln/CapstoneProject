@@ -18,6 +18,7 @@
             android:layout_marginStart="14dp"
             android:layout_marginTop="20dp"
             android:layout_alignParentStart="true"
+            android:contentDescription="@string/icon_desc"
             android:src="@drawable/icon_menu" />
 
         <TextView
@@ -65,6 +66,7 @@
                     android:layout_width="24dp"
                     android:layout_height="24dp"
                     android:layout_gravity="center"
+                    android:contentDescription="@string/icon_desc"
                     android:src="@drawable/icon_search"
                     android:tint="@android:color/white"
                     tools:ignore="UseAppTint" />
@@ -102,5 +104,50 @@
             android:textSize="13sp"
             android:textStyle="bold"
             android:text="@string/reveal_text" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/layout_result"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/background_color"
+        android:visibility="gone">
+
+        <TextView
+            android:id="@+id/result_word"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="100dp"
+            android:text="@string/result_word"
+            android:textStyle="bold"
+            android:fontFamily="sans-serif"
+            android:textSize="18sp"
+            android:textColor="@color/text_primary" />
+
+        <TextView
+            android:id="@+id/result_description"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_below="@id/result_word"
+            android:paddingHorizontal="16dp"
+            android:text="@string/description_will_be_shown_here"
+            android:textSize="14sp"
+            android:textColor="@color/text_primary"
+            android:gravity="center" />
+
+        <TextView
+            android:id="@+id/error_message"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_below="@id/result_word"
+            android:paddingHorizontal="16dp"
+            android:visibility="gone"
+            android:text="@string/word_not_found_please_try_again"
+            android:textSize="14sp"
+            android:textColor="@color/error_color"
+            android:gravity="center" />
     </RelativeLayout>
 </FrameLayout>
