@@ -2,18 +2,18 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/nav_verb_conjugator"
-        android:icon="@drawable/ic_verb"
-        android:title="Verb Conjugator" />
+        android:icon="@drawable/icon_search"
+        android:title="@string/menu_conjugator" />
     <item
         android:id="@+id/nav_jamid_detector"
-        android:icon="@drawable/ic_jamid"
-        android:title="Jamid Detector" />
+        android:icon="@drawable/icon_search"
+        android:title="@string/menu_detector" />
     <item
         android:id="@+id/nav_setting"
         android:icon="@drawable/ic_settings"
-        android:title="Setting" />
+        android:title="@string/menu_setting" />
     <item
         android:id="@+id/nav_app_info"
         android:icon="@drawable/ic_info"
-        android:title="App Info" />
+        android:title="@string/menu_info" />
 </menu>

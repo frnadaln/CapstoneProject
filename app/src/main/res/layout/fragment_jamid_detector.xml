@@ -50,8 +50,10 @@
                 android:layout_marginStart="50dp"
                 android:background="@null"
                 android:hint="@string/enter_word"
+                android:importantForAutofill="no"
+                android:inputType="text"
                 android:textSize="14sp"
-                tools:ignore="TouchTargetSizeCheck" />
+                tools:ignore="RelativeOverlap,TouchTargetSizeCheck" />
 
             <FrameLayout
                 android:id="@+id/search_button_background"
