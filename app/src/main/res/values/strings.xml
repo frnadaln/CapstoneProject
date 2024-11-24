@@ -10,6 +10,10 @@
     <string name="background_image_desc">Background Image Home</string>
     <string name="overlay_image_desc">Overlay Image Home</string>
     <string name="empty_history">No History Found</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="daily_notif">Daily Notification</string>
+    <string name="set_notific">Set Notification for Nearest Event Date</string>
 
     <string name="title_past">الماضي المعلوم</string>
     <string name="title_present">المضارع المعلوم</string>
@@ -26,4 +30,19 @@
     <string name="word_history">Arabic Word</string>
     <string name="word_favourite">Arabic Word</string>
     <string name="country_label">Ar</string>
+
+    <string name="back">Back</string>
+    <string name="app_info_title">App Info</string>
+    <string name="about_title"><u>About Arabic Morph</u></string>
+    <string name="about_description">ArabicMorph is a mobile application designed to help users understand and analyze the morphology of Arabic words. Users can enter a single Arabic word in Fusha to generate various forms of the word, as well as detect whether the word is a jamid (non-derived word) or musytaq (derived word).</string>
+    <string name="user_manual_title">User Manual</string>
+    <string name="verb_conjugator_title">Verb Conjugator</string>
+    <string name="verb_conjugator_description">Input a Fusha Arabic word, then click the 'search icon' to start conjugating.</string>
+    <string name="jamid_detector_title">Jamid Detector</string>
+    <string name="jamid_detector_description">Input a Fusha Arabic word, then click the 'search icon' to start detecting.</string>
+    <string name="favourite_title">Favourite</string>
+    <string name="favourite_description">Click the 'star icon' at the bottom of the screen to add to favorites.</string>
+    <string name="history_title">History</string>
+    <string name="history_description">Automatically fills in when doing Verb Conjugation or Jamid Detection.</string>
+
 </resources>

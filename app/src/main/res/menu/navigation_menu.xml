@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/nav_verb_conjugator"
+        android:icon="@drawable/ic_verb"
+        android:title="Verb Conjugator" />
+    <item
+        android:id="@+id/nav_jamid_detector"
+        android:icon="@drawable/ic_jamid"
+        android:title="Jamid Detector" />
+    <item
+        android:id="@+id/nav_setting"
+        android:icon="@drawable/ic_settings"
+        android:title="Setting" />
+    <item
+        android:id="@+id/nav_app_info"
+        android:icon="@drawable/ic_info"
+        android:title="App Info" />
+</menu>
