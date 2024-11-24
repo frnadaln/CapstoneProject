@@ -9,4 +9,9 @@
     <string name="search_icon">Search Icon</string>
     <string name="background_image_desc">Background Image Home</string>
     <string name="overlay_image_desc">Overlay Image Home</string>
+
+    <string name="title_past">الماضي المعلوم</string>
+    <string name="title_present">المضارع المعلوم</string>
+    <string name="title_command">الأمر</string>
+    <string name="add_to_favorite">Tambah ke Favorit</string>
 </resources>

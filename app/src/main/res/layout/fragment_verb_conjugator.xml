@@ -1,140 +1,202 @@
-<?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<FrameLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/home_conjug"
+    android:id="@+id/container"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/background_color"
-    tools:context=".MainActivity">
-
-    <ImageView
-        android:id="@+id/menu_icon"
-        android:layout_width="24dp"
-        android:layout_height="24dp"
-        android:layout_marginStart="14dp"
-        android:layout_marginTop="20dp"
-        android:layout_alignParentStart="true"
-        android:src="@drawable/icon_menu"
-        android:contentDescription="@string/menu_icon" />
-
-    <TextView
-        android:id="@+id/arabic_morp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="110dp"
-        android:text="@string/arabic_morph"
-        android:textStyle="bold"
-        android:fontFamily="sans-serif"
-        android:textSize="20sp"
-        android:textColor="@color/text_primary" />
+    android:layout_height="match_parent">
 
     <RelativeLayout
-        android:id="@+id/search_bar_container"
-        android:layout_width="322dp"
-        android:layout_height="42dp"
-        android:layout_marginTop="180dp"
-        android:layout_centerHorizontal="true"
-        android:background="@drawable/search_bg">
+        android:id="@+id/layout_initial"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/background_color">
+
+        <ImageView
+            android:id="@+id/menu_icon"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginStart="14dp"
+            android:layout_marginTop="20dp"
+            android:layout_alignParentStart="true"
+            android:src="@drawable/icon_menu" />
 
         <TextView
-            android:id="@+id/enter_word"
+            android:id="@+id/arabic_morp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginStart="50dp"
-            android:layout_alignParentStart="true"
-            android:textSize="14sp"
-            android:text="@string/enter_word"
-            android:textAppearance="@style/SearchInputTextStyle" />
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="110dp"
+            android:text="@string/arabic_morph"
+            android:textStyle="bold"
+            android:fontFamily="sans-serif"
+            android:textSize="20sp"
+            android:textColor="@color/text_primary" />
+
+        <RelativeLayout
+            android:id="@+id/search_bar_container"
+            android:layout_width="322dp"
+            android:layout_height="42dp"
+            android:layout_marginTop="180dp"
+            android:layout_centerHorizontal="true"
+            android:background="@drawable/search_bg">
+
+            <EditText
+                android:id="@+id/enter_word"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="50dp"
+                android:background="@null"
+                android:hint="@string/enter_word"
+                android:textSize="14sp"
+                tools:ignore="TouchTargetSizeCheck" />
+
+            <FrameLayout
+                android:id="@+id/search_button_background"
+                android:layout_width="53dp"
+                android:layout_height="42dp"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="2dp"
+                android:background="@drawable/rectangle_3">
+
+                <ImageView
+                    android:id="@+id/search_icon"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/icon_search"
+                    android:tint="@android:color/white"
+                    tools:ignore="UseAppTint" />
+            </FrameLayout>
+        </RelativeLayout>
 
         <FrameLayout
-            android:id="@+id/search_button_background"
-            android:layout_width="53dp"
-            android:layout_height="42dp"
-            android:layout_alignParentEnd="true"
-            android:layout_marginEnd="2dp"
-            android:background="@drawable/rectangle_3">
+            android:id="@+id/image_stack"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true">
 
             <ImageView
-                android:id="@+id/search_icon"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
+                android:id="@+id/background_image"
+                android:layout_width="206dp"
+                android:layout_height="128dp"
                 android:layout_gravity="center"
-                android:contentDescription="@string/search_icon"
-                android:src="@drawable/icon_search"
-                android:tint="@android:color/white"
-                tools:ignore="UseAppTint" />
+                android:src="@drawable/background_image" />
+
+            <ImageView
+                android:id="@+id/overlay_image"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_gravity="center"
+                android:src="@drawable/overlay_image" />
         </FrameLayout>
-    </RelativeLayout>
-
-    <FrameLayout
-        android:id="@+id/image_stack"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true">
-
-        <ImageView
-            android:id="@+id/background_image"
-            android:layout_width="206dp"
-            android:layout_height="128dp"
-            android:layout_gravity="center"
-            android:src="@drawable/background_image"
-            android:contentDescription="@string/background_image_desc"
-            tools:ignore="ContentDescription" />
-
-        <ImageView
-            android:id="@+id/overlay_image"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:layout_gravity="center"
-            android:src="@drawable/overlay_image"
-            android:contentDescription="@string/overlay_image_desc"
-            tools:ignore="ContentDescription" />
-    </FrameLayout>
-
-    <TextView
-        android:id="@+id/discover_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="459dp"
-        android:layout_centerHorizontal="true"
-        android:textSize="13sp"
-        android:textStyle="bold"
-        android:text="@string/discover_text"
-        android:textAppearance="@style/DiscoverTextStyle" />
-
-    <RelativeLayout
-        android:id="@+id/help_section"
-        android:layout_width="140dp"
-        android:layout_height="24dp"
-        android:layout_marginBottom="70dp"
-        android:layout_alignParentBottom="true"
-        android:layout_marginEnd="12dp"
-        android:layout_alignParentEnd="true"
-        android:background="@drawable/help_bg">
 
         <TextView
-            android:id="@+id/need_help"
+            android:id="@+id/discover_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginStart="20dp"
-            android:textSize="11sp"
+            android:layout_marginTop="459dp"
+            android:layout_centerHorizontal="true"
+            android:textSize="13sp"
             android:textStyle="bold"
-            android:text="@string/need_help"
-            android:textAppearance="@style/HelpTextStyle" />
+            android:text="@string/discover_text" />
 
-        <ImageView
-            android:id="@+id/help_icon"
-            android:layout_width="18dp"
-            android:layout_height="18dp"
+        <RelativeLayout
+            android:id="@+id/help_section"
+            android:layout_width="140dp"
+            android:layout_height="24dp"
+            android:layout_marginBottom="70dp"
+            android:layout_alignParentBottom="true"
+            android:layout_marginEnd="12dp"
             android:layout_alignParentEnd="true"
-            android:layout_centerVertical="true"
-            android:layout_marginEnd="8dp"
-            android:src="@drawable/icon_help"
-            android:contentDescription="@string/help_icon" />
+            android:background="@drawable/help_bg">
+
+            <TextView
+                android:id="@+id/need_help"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="20dp"
+                android:textSize="11sp"
+                android:textStyle="bold"
+                android:text="@string/need_help" />
+
+            <ImageView
+                android:id="@+id/help_icon"
+                android:layout_width="18dp"
+                android:layout_height="18dp"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="8dp"
+                android:src="@drawable/icon_help" />
+        </RelativeLayout>
     </RelativeLayout>
-</RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/result_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:background="@color/background_color"
+            android:padding="8dp">
+
+            <TextView
+                android:id="@+id/title_column1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="@string/title_past"
+                android:textColor="@android:color/white"
+                android:textStyle="bold"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/title_column2"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="@string/title_present"
+                android:textColor="@android:color/white"
+                android:textStyle="bold"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/title_column3"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="@string/title_command"
+                android:textColor="@android:color/white"
+                android:textStyle="bold"
+                android:textSize="14sp" />
+        </LinearLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_view_results"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/floating_button"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_gravity="end|bottom"
+            android:layout_margin="16dp"
+            android:src="@drawable/icon_favorite"
+            android:background="@drawable/bg"
+            android:contentDescription="@string/add_to_favorite"
+            android:elevation="8dp" />
+    </LinearLayout>
+</FrameLayout>
