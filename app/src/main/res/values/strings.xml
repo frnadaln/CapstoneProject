@@ -51,5 +51,7 @@
     <string name="setting">Setting</string>
     <string name="daily_notification">Daily Notification</string>
     <string name="set_notification_for_nearest_event_date">Set Notification for Nearest Event Date</string>
+    <string name="verb_conjugator">مع</string>
+    <string name="history">History</string>
 
 </resources>

@@ -1,15 +1,12 @@
 package com.capstone.arabicmorph
 
 import android.annotation.SuppressLint
-import android.content.Context
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
-import android.widget.ImageView
+import android.widget.FrameLayout
 import android.widget.LinearLayout
 import android.widget.RelativeLayout
 import android.widget.Toast
@@ -21,20 +18,16 @@ class VerbConjugatorFragment : Fragment() {
 
     private lateinit var initialLayout: RelativeLayout
     private lateinit var resultLayout: LinearLayout
+    private lateinit var imageStack: FrameLayout
+    private lateinit var helpSection: RelativeLayout
     private lateinit var recyclerView: RecyclerView
     private lateinit var adapter: ConjugatorResultAdapter
-    private lateinit var floatingButton: ImageView
-    private lateinit var menuIcon: ImageView
+    private lateinit var searchButton: View
+    private lateinit var searchInput: EditText
     private val data = mutableListOf<Array<String>>()
-    private var drawerToggleListener: DrawerToggleListener? = null
 
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        if (context is DrawerToggleListener) {
-            drawerToggleListener = context
-        } else {
-            throw RuntimeException("$context must implement DrawerToggleListener")
-        }
+    interface DrawerToggleListener {
+        fun onMenuIconClicked()
     }
 
     override fun onCreateView(
@@ -45,34 +38,23 @@ class VerbConjugatorFragment : Fragment() {
 
         initialLayout = view.findViewById(R.id.layout_initial)
         resultLayout = view.findViewById(R.id.result_layout)
+        imageStack = view.findViewById(R.id.image_stack)
+        helpSection = view.findViewById(R.id.help_section)
         recyclerView = view.findViewById(R.id.recycler_view_results)
-        floatingButton = view.findViewById(R.id.floating_button)
-        menuIcon = view.findViewById(R.id.menu_icon)
+        searchButton = view.findViewById(R.id.search_button_background)
+        searchInput = view.findViewById(R.id.enter_word)
 
         recyclerView.layoutManager = LinearLayoutManager(context)
         adapter = ConjugatorResultAdapter(data)
         recyclerView.adapter = adapter
 
-        val searchBar: EditText = view.findViewById(R.id.enter_word)
-        searchBar.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
-            override fun afterTextChanged(s: Editable?) {
-                val query = s.toString()
-                if (query.isNotEmpty()) {
-                    performSearch(query)
-                } else {
-                    showInitialLayout()
-                }
+        searchButton.setOnClickListener {
+            val query = searchInput.text.toString().trim()
+            if (query.isNotEmpty()) {
+                performSearch(query)
+            } else {
+                Toast.makeText(context, "Masukkan kata untuk mencari!", Toast.LENGTH_SHORT).show()
             }
-        })
-
-        floatingButton.setOnClickListener {
-            Toast.makeText(context, "Ditambahkan ke Favorit", Toast.LENGTH_SHORT).show()
-        }
-
-        menuIcon.setOnClickListener {
-            drawerToggleListener?.onMenuIconClicked()
         }
 
         return view
@@ -85,37 +67,17 @@ class VerbConjugatorFragment : Fragment() {
         if (query == "أكل") {
             data.add(arrayOf("أَكَلْتَ", "تَأْكُلُ", "كُلْ"))
             data.add(arrayOf("أَكَلْتِ", "تَأْكُلِينَ", "كُلِي"))
-            data.add(arrayOf("أَكَلْ", "تَأْكُلَانِ", "كُلَا"))
-            data.add(arrayOf("أَكَلْنَا", "نَأْكُلُ", "لْنَا"))
-            data.add(arrayOf("أَكَلْتُم", "تَأْكُلُونَ", "كُلُوا"))
-            data.add(arrayOf("أَكَلْتُنَّ", "تَأْكُلْنَ", "كُلْنَ"))
-            data.add(arrayOf("أَكَلُوا", "يَأْكُلُونَ", "لُوا"))
-            data.add(arrayOf("أَكَلْنَ", "يَأْكُلْنَ", "كُنَ"))
-            data.add(arrayOf("...", "...", "..."))
-            data.add(arrayOf("...", "...", "..."))
-            data.add(arrayOf("...", "...", "..."))
+        } else {
+            data.add(arrayOf("Hasil tidak ditemukan", "-", "-"))
         }
 
         adapter.notifyDataSetChanged()
         showResultsLayout()
     }
 
-    private fun showInitialLayout() {
-        initialLayout.visibility = View.VISIBLE
-        resultLayout.visibility = View.GONE
-    }
-
     private fun showResultsLayout() {
-        initialLayout.visibility = View.GONE
+        imageStack.visibility = View.GONE
+        helpSection.visibility = View.GONE
         resultLayout.visibility = View.VISIBLE
-    }
-
-    override fun onDetach() {
-        super.onDetach()
-        drawerToggleListener = null
-    }
-
-    interface DrawerToggleListener {
-        fun onMenuIconClicked()
     }
 }

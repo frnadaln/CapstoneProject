@@ -11,22 +11,32 @@
         android:layout_height="match_parent"
         android:background="@color/background_color">
 
+        <ImageView
+            android:id="@+id/menu_icon"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginStart="14dp"
+            android:layout_marginTop="20dp"
+            android:layout_alignParentStart="true"
+            android:src="@drawable/icon_menu"
+            android:contentDescription="@string/menu_icon" />
+
         <TextView
-            android:id="@+id/jamid_detec"
+            android:id="@+id/arabic_morp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="110dp"
+            android:layout_marginTop="130dp"
             android:text="@string/jamid_detect"
             android:textStyle="bold"
             android:fontFamily="sans-serif"
-            android:textSize="20sp"
-            android:textColor="@color/text_secondary" />
+            android:textSize="23sp"
+            android:textColor="@color/text_primary" />
 
         <RelativeLayout
             android:id="@+id/search_bar_container"
-            android:layout_width="322dp"
-            android:layout_height="42dp"
+            android:layout_width="340dp"
+            android:layout_height="48dp"
             android:layout_marginTop="180dp"
             android:layout_centerHorizontal="true"
             android:background="@drawable/search_bg">
@@ -39,18 +49,17 @@
                 android:layout_centerVertical="true"
                 android:layout_marginStart="50dp"
                 android:background="@null"
+                android:textColor="@color/text_secondary"
                 android:hint="@string/enter_word"
-                android:importantForAutofill="no"
-                android:inputType="text"
-                android:textSize="14sp"
-                tools:ignore="RelativeOverlap,TouchTargetSizeCheck" />
+                android:textSize="16sp"
+                tools:ignore="TouchTargetSizeCheck" />
 
             <FrameLayout
                 android:id="@+id/search_button_background"
-                android:layout_width="53dp"
-                android:layout_height="42dp"
+                android:layout_width="60dp"
+                android:layout_height="48dp"
                 android:layout_alignParentEnd="true"
-                android:layout_marginEnd="2dp"
+                android:layout_marginEnd="0dp"
                 android:background="@drawable/rectangle_3">
 
                 <ImageView
@@ -58,7 +67,6 @@
                     android:layout_width="24dp"
                     android:layout_height="24dp"
                     android:layout_gravity="center"
-                    android:contentDescription="@string/icon_desc"
                     android:src="@drawable/icon_search"
                     android:tint="@android:color/white"
                     tools:ignore="UseAppTint" />
@@ -74,18 +82,16 @@
 
             <ImageView
                 android:id="@+id/background_image"
-                android:layout_width="206dp"
-                android:layout_height="128dp"
+                android:layout_width="260dp"
+                android:layout_height="170dp"
                 android:layout_gravity="center"
-                android:contentDescription="@string/background_image_desc"
                 android:src="@drawable/background_image" />
 
             <ImageView
                 android:id="@+id/overlay_image"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
+                android:layout_width="160dp"
+                android:layout_height="160dp"
                 android:layout_gravity="center"
-                android:contentDescription="@string/overlay_image_desc"
                 android:src="@drawable/overlay_image" />
         </FrameLayout>
 
@@ -144,4 +150,92 @@
             android:textColor="@color/error_color"
             android:gravity="center" />
     </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:background="@color/background_color"
+        android:gravity="center"
+        android:padding="8dp"
+        android:layout_gravity="bottom"
+        android:elevation="20dp" >
+
+        <LinearLayout
+            android:id="@+id/favorite_button"
+            android:layout_width="0dp"
+            android:layout_height="56dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/ic_favourite"
+                android:contentDescription="@string/favourite" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="@string/favourite"
+                android:textColor="@color/black"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:gravity="center" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/verb_conjugator_button"
+            android:layout_width="0dp"
+            android:layout_height="56dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <FrameLayout
+                android:layout_width="56dp"
+                android:layout_height="56dp"
+                android:background="@drawable/button_bg"
+                android:gravity="center">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginBottom="10dp"
+                    android:fontFamily="sans-serif-medium"
+                    android:gravity="center"
+                    android:text="@string/verb_conjugator"
+                    android:textColor="@color/white"
+                    android:textSize="24sp" />
+            </FrameLayout>
+        </LinearLayout>
+
+
+
+        <LinearLayout
+            android:id="@+id/history_button"
+            android:layout_width="0dp"
+            android:layout_height="56dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/ic_history"
+                android:contentDescription="@string/history" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="@string/history"
+                android:textColor="@color/black"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:gravity="center" />
+        </LinearLayout>
+    </LinearLayout>
+
 </FrameLayout>
