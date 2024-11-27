@@ -53,5 +53,13 @@
     <string name="set_notification_for_nearest_event_date">Set Notification for Nearest Event Date</string>
     <string name="verb_conjugator">مع</string>
     <string name="history">History</string>
+    <string name="appwidget_text">ArabicMorph</string>
+    <string name="add_widget">Add widget</string>
+    <string name="app_widget_description">This is an app widget description</string>
+    <string name="enter_word_to_search">Enter a fusha arabic word to search</string>
+    <string name="example_result_description">Example result description</string>
+    <string name="reveal_empty_history_text">Your history will appear here once you analyze a word.\nStart by entering a word to begin!</string>
+    <string name="reveal_empty_favourite_text">You can add an item to your favourite by clicking “Star Icon”</string>
+
 
 </resources>
