@@ -13,6 +13,11 @@
         <item name="android:statusBarColor">@color/custom_color</item>
     </style>
 
+    <style name="CustomToolbarStyle">
+        <item name="android:background">@color/header_background</item>
+        <item name="android:titleTextColor" tools:targetApi="m">@android:color/black</item>
+    </style>
+
     <style name="SearchInputTextStyle">
         <item name="android:textSize">14sp</item>
         <item name="android:textColor">@color/text_secondary</item>

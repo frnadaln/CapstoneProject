@@ -5,14 +5,18 @@ import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
+import com.capstone.arabicmorph.view.jamiddetector.JamidDetectorFragment
 import com.google.android.material.navigation.NavigationView
 
+@Suppress("DEPRECATION")
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener, VerbConjugatorFragment.DrawerToggleListener {
 
     private lateinit var drawerLayout: DrawerLayout
+    private lateinit var toolbar: Toolbar
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -20,19 +24,31 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         customizeStatusBar()
 
+        toolbar = findViewById(R.id.toolbar)
+        setSupportActionBar(toolbar)
+
         drawerLayout = findViewById(R.id.drawer_layout)
         val navigationView: NavigationView = findViewById(R.id.navigation_view)
-
         navigationView.setNavigationItemSelectedListener(this)
 
         supportFragmentManager.beginTransaction()
             .replace(R.id.main_content, VerbConjugatorFragment())
             .commit()
+
+        toolbar.setNavigationIcon(R.drawable.icon_menu)
+        toolbar.setNavigationOnClickListener {
+            if (!drawerLayout.isDrawerOpen(GravityCompat.START)) {
+                drawerLayout.openDrawer(GravityCompat.START)
+            } else {
+                drawerLayout.closeDrawer(GravityCompat.START)
+            }
+        }
     }
 
     private fun customizeStatusBar() {
         @Suppress("DEPRECATION")
         window.statusBarColor = ContextCompat.getColor(this, R.color.custom_color)
+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             @Suppress("DEPRECATION")
             window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
@@ -52,7 +68,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
             drawerLayout.closeDrawer(GravityCompat.START)
         } else {
-            @Suppress("DEPRECATION")
             super.onBackPressed()
         }
     }
@@ -63,21 +78,25 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 supportFragmentManager.beginTransaction()
                     .replace(R.id.main_content, VerbConjugatorFragment())
                     .commit()
+                toolbar.title = "Verb Conjugator"
             }
             R.id.nav_jamid_detector -> {
                 supportFragmentManager.beginTransaction()
                     .replace(R.id.main_content, JamidDetectorFragment())
                     .commit()
+                toolbar.title = "Jamid Detector"
             }
             R.id.nav_setting -> {
                 supportFragmentManager.beginTransaction()
                     .replace(R.id.main_content, SettingFragment())
                     .commit()
+                toolbar.title = "Setting"
             }
             R.id.nav_app_info -> {
                 supportFragmentManager.beginTransaction()
                     .replace(R.id.main_content, AppInfoFragment())
                     .commit()
+                toolbar.title = "App Info"
             }
         }
         drawerLayout.closeDrawer(GravityCompat.START)

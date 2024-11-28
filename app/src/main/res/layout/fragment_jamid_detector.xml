@@ -11,16 +11,6 @@
         android:layout_height="match_parent"
         android:background="@color/background_color">
 
-        <ImageView
-            android:id="@+id/menu_icon"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:layout_marginStart="14dp"
-            android:layout_marginTop="20dp"
-            android:layout_alignParentStart="true"
-            android:src="@drawable/icon_menu"
-            android:contentDescription="@string/menu_icon" />
-
         <TextView
             android:id="@+id/arabic_morp"
             android:layout_width="wrap_content"

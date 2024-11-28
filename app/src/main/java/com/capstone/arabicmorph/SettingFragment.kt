@@ -9,11 +9,5 @@ class SettingFragment : Fragment(R.layout.fragment_setting) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val backButton = view.findViewById<ImageView>(R.id.btn_back_setting)
-        backButton.setOnClickListener {
-            parentFragmentManager.beginTransaction()
-                .replace(R.id.main_content, VerbConjugatorFragment())
-                .commit()
-        }
     }
 }

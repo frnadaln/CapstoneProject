@@ -1,4 +1,4 @@
-package com.capstone.arabicmorph
+package com.capstone.arabicmorph.view.jamiddetector
 
 import android.os.Bundle
 import android.view.KeyEvent
@@ -7,13 +7,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.FrameLayout
-import android.widget.ImageView
 import android.widget.RelativeLayout
 import android.widget.TextView
 import android.widget.Toast
-import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
+import com.capstone.arabicmorph.R
 
 class JamidDetectorFragment : Fragment() {
 
@@ -40,15 +39,6 @@ class JamidDetectorFragment : Fragment() {
         resultWord = view.findViewById(R.id.result_word)
         resultDescription = view.findViewById(R.id.result_description)
         errorMessage = view.findViewById(R.id.error_message)
-
-        val menuIcon: ImageView = view.findViewById(R.id.menu_icon)
-        menuIcon.setOnClickListener {
-            if (!drawerLayout.isDrawerOpen(GravityCompat.START)) {
-                drawerLayout.openDrawer(GravityCompat.START)
-            } else {
-                drawerLayout.closeDrawer(GravityCompat.START)
-            }
-        }
 
         searchButton.setOnClickListener {
             processSearchInput()

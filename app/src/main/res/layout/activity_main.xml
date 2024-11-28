@@ -10,6 +10,13 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:popupTheme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+            style="@style/CustomToolbarStyle" />
+
         <FrameLayout
             android:id="@+id/main_content"
             android:layout_width="match_parent"
