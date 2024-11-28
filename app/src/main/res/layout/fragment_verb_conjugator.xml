@@ -213,7 +213,7 @@
             <ImageView
                 android:layout_width="24dp"
                 android:layout_height="24dp"
-                android:src="@drawable/ic_favourite"
+                android:src="@drawable/ic_favourite_nav"
                 android:contentDescription="@string/favourite" />
 
             <TextView

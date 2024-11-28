@@ -1,4 +1,6 @@
 package com.capstone.arabicmorph.view.history
 
-class HistoryFragment {
+import androidx.fragment.app.Fragment
+
+class HistoryFragment : Fragment() {
 }
