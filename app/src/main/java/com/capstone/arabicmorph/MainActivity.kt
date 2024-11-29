@@ -9,11 +9,17 @@ import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
+import androidx.work.PeriodicWorkRequestBuilder
+import androidx.work.WorkInfo
+import androidx.work.WorkManager
 import com.capstone.arabicmorph.view.favourite.FavouriteFragment
 import com.capstone.arabicmorph.view.history.HistoryFragment
 import com.capstone.arabicmorph.view.jamiddetector.JamidDetectorFragment
+import com.capstone.arabicmorph.view.setting.ReminderWorker
+import com.capstone.arabicmorph.view.setting.SettingFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.navigation.NavigationView
+import java.util.concurrent.TimeUnit
 
 @Suppress("DEPRECATION")
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
@@ -27,6 +33,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         setContentView(R.layout.activity_main)
 
         customizeStatusBar()
+
+        scheduleReminder()
 
         toolbar = findViewById(R.id.toolbar)
         setSupportActionBar(toolbar)
@@ -92,6 +100,23 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
         }
+    }
+
+    private fun scheduleReminder() {
+        val workManager = WorkManager.getInstance(this)
+
+        // Cek apakah pekerjaan dengan tag "reminder" sudah dijadwalkan.
+        workManager.getWorkInfosByTag("reminder")
+            .get()
+            .let { workInfos ->
+                val isWorkScheduled = workInfos?.any { it.state == WorkInfo.State.ENQUEUED || it.state == WorkInfo.State.RUNNING } == true
+                if (!isWorkScheduled) {
+                    val reminderRequest = PeriodicWorkRequestBuilder<ReminderWorker>(1, TimeUnit.DAYS)
+                        .addTag("reminder")
+                        .build()
+                    workManager.enqueue(reminderRequest)
+                }
+            }
     }
 
     @Deprecated("This method has been deprecated in favor of using the\n      {@link OnBackPressedDispatcher} via {@link #getOnBackPressedDispatcher()}.\n      The OnBackPressedDispatcher controls how back button events are dispatched\n      to one or more {@link OnBackPressedCallback} objects.")
