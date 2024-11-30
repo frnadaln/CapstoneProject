@@ -18,7 +18,7 @@ import androidx.work.WorkManager
 import com.capstone.arabicmorph.view.favourite.FavouriteFragment
 import com.capstone.arabicmorph.view.history.HistoryFragment
 import com.capstone.arabicmorph.view.jamiddetector.JamidDetectorFragment
-import com.capstone.arabicmorph.view.setting.ReminderWorker
+import com.capstone.arabicmorph.worker.ReminderWorker
 import com.capstone.arabicmorph.view.setting.SettingFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.navigation.NavigationView

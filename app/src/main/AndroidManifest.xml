@@ -14,6 +14,11 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ArabicMorph"
         tools:targetApi="31">
+
+        <meta-data
+            android:name="androidx.work.WorkManagerConfiguration"
+            android:value="androidx.work.Configuration$Provider" />
+
         <activity
             android:name=".MainActivity"
             android:exported="true">

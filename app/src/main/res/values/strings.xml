@@ -61,5 +61,7 @@
     <string name="reveal_empty_history_text">Your history will appear here once you analyze a word.\nStart by entering a word to begin!</string>
     <string name="reveal_empty_favourite_text">You can add an item to your favourite by clicking “Star Icon”</string>
 
+    <string name="xp_counter_initial">XP: 0</string>
+    <string name="xp_counter_text">XP: %1$d</string>
 
 </resources>

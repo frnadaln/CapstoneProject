@@ -1,4 +1,4 @@
-package com.capstone.arabicmorph.view.setting
+package com.capstone.arabicmorph.worker
 
 import android.annotation.SuppressLint
 import android.app.NotificationChannel

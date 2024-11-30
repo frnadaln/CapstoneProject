@@ -10,6 +10,7 @@ import android.widget.Switch
 import android.widget.Toast
 import androidx.work.PeriodicWorkRequestBuilder
 import androidx.work.WorkManager
+import com.capstone.arabicmorph.worker.ReminderWorker
 import java.util.concurrent.TimeUnit
 
 class SettingFragment : Fragment(R.layout.fragment_setting) {

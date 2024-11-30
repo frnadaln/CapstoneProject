@@ -24,6 +24,9 @@ class JamidDetectorFragment : Fragment() {
     private lateinit var resultWord: TextView
     private lateinit var resultDescription: TextView
     private lateinit var errorMessage: TextView
+    private lateinit var xpCounter: TextView
+
+    private var currentXP = 0
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -39,6 +42,9 @@ class JamidDetectorFragment : Fragment() {
         resultWord = view.findViewById(R.id.result_word)
         resultDescription = view.findViewById(R.id.result_description)
         errorMessage = view.findViewById(R.id.error_message)
+        xpCounter = view.findViewById(R.id.xp_counter)
+
+        updateXPCounter()
 
         searchButton.setOnClickListener {
             processSearchInput()
@@ -66,6 +72,7 @@ class JamidDetectorFragment : Fragment() {
 
         if (inputWord.lowercase() == "jamid") {
             displayResult(inputWord, getString(R.string.example_result_description))
+            incrementXP()
         } else {
             displayError()
         }
@@ -87,5 +94,14 @@ class JamidDetectorFragment : Fragment() {
         errorMessage.visibility = View.VISIBLE
         resultWord.text = ""
         resultDescription.text = ""
+    }
+
+    private fun incrementXP() {
+        currentXP += 10
+        updateXPCounter()
+    }
+
+    private fun updateXPCounter() {
+        xpCounter.text = getString(R.string.xp_counter_text, currentXP)
     }
 }
