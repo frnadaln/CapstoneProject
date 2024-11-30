@@ -1,4 +1,4 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
+<resources>
     <string name="app_name">ArabicMorph</string>
     <string name="arabic_morph">Arabic Morph</string>
     <string name="enter_word">Enter word in Fusha Arabic</string>
@@ -13,7 +13,7 @@
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="daily_notif">Daily Notification</string>
-    <string name="set_notific">Set Notification for Nearest Event Date</string>
+    <string name="set_notific">Set Reminder Notification for Daily</string>
 
     <string name="title_past">الماضي المعلوم</string>
     <string name="title_present">المضارع المعلوم</string>
@@ -50,7 +50,7 @@
     <string name="menu_info">App Info</string>
     <string name="setting">Setting</string>
     <string name="daily_notification">Daily Notification</string>
-    <string name="set_notification_for_nearest_event_date">Set Notification for Nearest Event Date</string>
+    <string name="set_notification">Set Reminder Notification for Daily</string>
     <string name="verb_conjugator">مع</string>
     <string name="history">History</string>
     <string name="appwidget_text">ArabicMorph</string>

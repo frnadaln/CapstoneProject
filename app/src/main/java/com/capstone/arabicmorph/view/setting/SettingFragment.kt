@@ -29,18 +29,18 @@ class SettingFragment : Fragment(R.layout.fragment_setting) {
             if (isChecked) {
                 scheduleReminder()
                 saveNotificationStatus(true)
-                Toast.makeText(requireContext(), "Notifikasi diaktifkan", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), "Notifications turned on", Toast.LENGTH_SHORT).show()
             } else {
                 cancelReminder()
                 saveNotificationStatus(false)
-                Toast.makeText(requireContext(), "Notifikasi dimatikan", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), "Notifications turned off", Toast.LENGTH_SHORT).show()
             }
         }
     }
 
     private fun scheduleReminder() {
         val reminderRequest = PeriodicWorkRequestBuilder<ReminderWorker>(1, TimeUnit.DAYS)
-            .addTag("reminder") // Tambahkan tag di sini
+            .addTag("reminder")
             .build()
 
         WorkManager.getInstance(requireContext()).enqueue(reminderRequest)

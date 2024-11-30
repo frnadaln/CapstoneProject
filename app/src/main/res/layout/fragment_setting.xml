@@ -35,7 +35,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
-                android:text="@string/set_notification_for_nearest_event_date"
+                android:text="@string/set_notification"
                 android:textAppearance="@style/TextAppearance.AppCompat.Small"
                 android:textColor="@color/text_gray"
                 android:fontFamily="sans-serif" />
@@ -48,6 +48,7 @@
             android:layout_gravity="center_vertical"
             android:thumbTint="@color/switch_thumb"
             android:trackTint="@color/switch_track"
-            tools:ignore="TouchTargetSizeCheck" />
+            tools:ignore="TouchTargetSizeCheck,UseSwitchCompatOrMaterialXml"
+            tools:targetApi="m" />
     </LinearLayout>
 </LinearLayout>

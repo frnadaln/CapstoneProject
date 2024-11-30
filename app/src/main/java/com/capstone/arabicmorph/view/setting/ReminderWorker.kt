@@ -50,8 +50,8 @@ class ReminderWorker(context: Context, workerParams: WorkerParameters) : Worker(
 
         val notification = NotificationCompat.Builder(applicationContext, CHANNEL_ID)
             .setSmallIcon(R.drawable.ic_notif)
-            .setContentTitle("Pengingat Belajar Rutin")
-            .setContentText("Sudah waktunya belajar morfologi Arab! Masukkan satu kata baru hari ini dan pelajari lebih banyak!")
+            .setContentTitle("Routine Study Reminder")
+            .setContentText("It's time to learn Arabic morphology! Enter one new Fusha Arabic word today and learn more!")
             .setPriority(NotificationCompat.PRIORITY_HIGH)
             .setAutoCancel(true)
             .setDefaults(NotificationCompat.DEFAULT_ALL)

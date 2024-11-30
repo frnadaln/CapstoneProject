@@ -1,9 +1,12 @@
 package com.capstone.arabicmorph
 
+import android.Manifest
 import android.os.Build
 import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
+import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
@@ -92,6 +95,10 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 drawerLayout.closeDrawer(GravityCompat.START)
             }
         }
+
+        if (Build.VERSION.SDK_INT >= 33) {
+            requestPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
+        }
     }
 
     private fun customizeStatusBar() {
@@ -104,8 +111,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     private fun scheduleReminder() {
         val workManager = WorkManager.getInstance(this)
-
-        // Cek apakah pekerjaan dengan tag "reminder" sudah dijadwalkan.
         workManager.getWorkInfosByTag("reminder")
             .get()
             .let { workInfos ->
@@ -162,4 +167,15 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         drawerLayout.closeDrawer(GravityCompat.START)
         return true
     }
+
+    private val requestPermissionLauncher =
+        registerForActivityResult(
+            ActivityResultContracts.RequestPermission()
+        ) { isGranted: Boolean ->
+            if (isGranted) {
+                Toast.makeText(this, "Notifications authorization granted", Toast.LENGTH_SHORT).show()
+            } else {
+                Toast.makeText(this, "Notifications authorization rejected", Toast.LENGTH_SHORT).show()
+            }
+        }
 }
