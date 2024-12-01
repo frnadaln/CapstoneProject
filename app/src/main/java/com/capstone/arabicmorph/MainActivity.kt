@@ -153,14 +153,14 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                     .replace(R.id.main_content, SettingFragment())
                     .commit()
                 toolbar.title = "Setting"
-                bottomNavigationView.visibility = View.GONE
+                bottomNavigationView.visibility = View.VISIBLE
             }
             R.id.nav_app_info -> {
                 supportFragmentManager.beginTransaction()
                     .replace(R.id.main_content, AppInfoFragment())
                     .commit()
                 toolbar.title = "App Info"
-                bottomNavigationView.visibility = View.GONE
+                bottomNavigationView.visibility = View.VISIBLE
             }
         }
         drawerLayout.closeDrawer(GravityCompat.START)

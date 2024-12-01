@@ -105,7 +105,7 @@
             android:id="@+id/reveal_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="459dp"
+            android:layout_marginTop="500dp"
             android:layout_centerHorizontal="true"
             android:textSize="13sp"
             android:textStyle="bold"

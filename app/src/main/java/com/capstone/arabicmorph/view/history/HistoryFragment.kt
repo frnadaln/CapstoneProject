@@ -14,7 +14,7 @@ class HistoryFragment : Fragment() {
     private var _binding: FragmentHistoryBinding? = null
     private val binding get() = _binding!!
 
-    private val historyList: List<String> = emptyList() // Simulasi data history, ganti sesuai data sebenarnya
+    private val historyList: List<String> = emptyList()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -34,19 +34,17 @@ class HistoryFragment : Fragment() {
     private fun setupRecyclerView() {
         binding.recyclerView.apply {
             layoutManager = LinearLayoutManager(requireContext())
-            adapter = HistoryAdapter(historyList) // Ganti dengan adapter Anda
+            adapter = HistoryAdapter(historyList)
         }
     }
 
     private fun checkHistory() {
         if (historyList.isEmpty()) {
-            // Tidak ada history
             binding.imageStack.visibility = View.VISIBLE
             binding.emptyStateTextView.visibility = View.VISIBLE
             binding.revealText.visibility = View.VISIBLE
             binding.recyclerView.visibility = View.GONE
         } else {
-            // Ada history
             binding.imageStack.visibility = View.GONE
             binding.emptyStateTextView.visibility = View.GONE
             binding.revealText.visibility = View.GONE
