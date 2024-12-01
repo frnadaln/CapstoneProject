@@ -15,7 +15,6 @@ import androidx.drawerlayout.widget.DrawerLayout
 import androidx.work.PeriodicWorkRequestBuilder
 import androidx.work.WorkInfo
 import androidx.work.WorkManager
-import com.capstone.arabicmorph.view.favourite.FavouriteFragment
 import com.capstone.arabicmorph.view.history.HistoryFragment
 import com.capstone.arabicmorph.view.jamiddetector.JamidDetectorFragment
 import com.capstone.arabicmorph.worker.ReminderWorker
@@ -49,14 +48,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         bottomNavigationView = findViewById(R.id.bottom_navigation)
         bottomNavigationView.setOnNavigationItemSelectedListener { item ->
             when (item.itemId) {
-                R.id.nav_favorite -> {
-                    supportFragmentManager.beginTransaction()
-                        .replace(R.id.main_content, FavouriteFragment())
-                        .commit()
-                    toolbar.title = "Favorite"
-                    return@setOnNavigationItemSelectedListener true
-                }
-
                 R.id.nav_verb_conjugator -> {
                     supportFragmentManager.beginTransaction()
                         .replace(R.id.main_content, VerbConjugatorFragment())
@@ -70,6 +61,14 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                         .replace(R.id.main_content, HistoryFragment())
                         .commit()
                     toolbar.title = "History"
+                    return@setOnNavigationItemSelectedListener true
+                }
+
+                R.id.nav_jamid_detector -> {
+                    supportFragmentManager.beginTransaction()
+                        .replace(R.id.main_content, JamidDetectorFragment())
+                        .commit()
+                    toolbar.title = "Jamid Detector"
                     return@setOnNavigationItemSelectedListener true
                 }
 
