@@ -1,6 +1,8 @@
 package com.capstone.arabicmorph.view.history
 
 import HistoryAdapter
+import android.animation.ObjectAnimator
+import android.animation.AnimatorSet
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -29,6 +31,7 @@ class HistoryFragment : Fragment() {
 
         setupRecyclerView()
         checkHistory()
+        startImageAnimation()  // Start the animation
     }
 
     private fun setupRecyclerView() {
@@ -50,6 +53,33 @@ class HistoryFragment : Fragment() {
             binding.revealText.visibility = View.GONE
             binding.recyclerView.visibility = View.VISIBLE
         }
+    }
+
+    // Start the animation for background image and other elements
+    private fun startImageAnimation() {
+        // Animation for background image moving horizontally
+        val backgroundAnim = ObjectAnimator.ofFloat(binding.backgroundImage, "translationX", -30f, 30f)
+        backgroundAnim.duration = 6000 // Duration of the animation
+        backgroundAnim.repeatCount = ObjectAnimator.INFINITE
+        backgroundAnim.repeatMode = ObjectAnimator.REVERSE
+
+        // AnimatorSet to apply the animation to the background image
+        val animatorSet = AnimatorSet().apply {
+            playTogether(backgroundAnim) // Play the animation together with other elements
+        }
+        animatorSet.start()
+
+        // Fade-in animation for TextView elements
+        val title = ObjectAnimator.ofFloat(binding.emptyStateTextView, View.ALPHA, 1f).setDuration(100)
+        val revealText = ObjectAnimator.ofFloat(binding.revealText, View.ALPHA, 1f).setDuration(100)
+
+        AnimatorSet().apply {
+            playSequentially(
+                title,
+                revealText
+            )
+            startDelay = 100
+        }.start()
     }
 
     override fun onDestroyView() {
