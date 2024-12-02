@@ -1,10 +1,11 @@
-package com.capstone.arabicmorph
+package com.capstone.arabicmorph.view.verbconjugator
 
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.capstone.arabicmorph.R
 
 class ConjugatorResultAdapter(private val data: List<Array<String>>) :
     RecyclerView.Adapter<ConjugatorResultAdapter.ViewHolder>() {
