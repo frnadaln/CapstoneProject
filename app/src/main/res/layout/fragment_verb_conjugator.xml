@@ -16,7 +16,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="130dp"
+            android:layout_marginTop="110dp"
             android:text="@string/menu_conjugator"
             android:textStyle="bold"
             android:fontFamily="sans-serif"
@@ -39,7 +39,7 @@
             android:id="@+id/search_bar_container"
             android:layout_width="340dp"
             android:layout_height="48dp"
-            android:layout_marginTop="180dp"
+            android:layout_marginTop="170dp"
             android:layout_centerHorizontal="true"
             android:background="@drawable/search_bg">
 
@@ -101,7 +101,7 @@
             android:id="@+id/discover_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="500dp"
+            android:layout_marginTop="510dp"
             android:layout_centerHorizontal="true"
             android:textSize="13sp"
             android:textStyle="bold"

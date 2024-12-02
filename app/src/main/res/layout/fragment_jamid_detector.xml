@@ -16,7 +16,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="130dp"
+            android:layout_marginTop="110dp"
             android:text="@string/jamid_detect"
             android:textStyle="bold"
             android:fontFamily="sans-serif"
@@ -39,7 +39,7 @@
             android:id="@+id/search_bar_container"
             android:layout_width="340dp"
             android:layout_height="48dp"
-            android:layout_marginTop="180dp"
+            android:layout_marginTop="170dp"
             android:layout_centerHorizontal="true"
             android:background="@drawable/search_bg">
 
@@ -105,7 +105,7 @@
             android:id="@+id/reveal_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="500dp"
+            android:layout_marginTop="510dp"
             android:layout_centerHorizontal="true"
             android:textSize="13sp"
             android:textStyle="bold"
@@ -156,71 +156,5 @@
             android:textColor="@color/error_color"
             android:gravity="center" />
     </RelativeLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:baselineAligned="false"
-        android:orientation="horizontal"
-        android:background="@color/background_color"
-        android:gravity="center"
-        android:padding="8dp"
-        android:layout_gravity="bottom"
-        android:elevation="20dp" >
-
-        <LinearLayout
-            android:id="@+id/verb_conjugator_button"
-            android:layout_width="0dp"
-            android:layout_height="56dp"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:orientation="vertical">
-
-            <FrameLayout
-                android:layout_width="56dp"
-                android:layout_height="56dp"
-                android:background="@drawable/button_bg"
-                android:gravity="center"
-                tools:ignore="UselessParent">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginBottom="10dp"
-                    android:fontFamily="sans-serif-medium"
-                    android:gravity="center"
-                    android:text="@string/verb_conjugator"
-                    android:textColor="@color/white"
-                    android:textSize="24sp" />
-            </FrameLayout>
-        </LinearLayout>
-
-
-
-        <LinearLayout
-            android:id="@+id/history_button"
-            android:layout_width="0dp"
-            android:layout_height="56dp"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:orientation="vertical"
-            tools:ignore="UseCompoundDrawables">
-
-            <ImageView
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:src="@drawable/ic_history"
-                android:contentDescription="@string/history" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:text="@string/history"
-                android:textColor="@color/black"
-                android:textSize="14sp"
-                android:textStyle="bold"
-                android:gravity="center" />
-        </LinearLayout>
-    </LinearLayout>
 
 </FrameLayout>

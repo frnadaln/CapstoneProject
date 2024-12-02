@@ -63,5 +63,6 @@
 
     <string name="xp_counter_initial">XP: 0</string>
     <string name="xp_counter_text">XP: %1$d</string>
+    <string name="splash_text">Welcome to ArabicMorph!</string>
 
 </resources>
