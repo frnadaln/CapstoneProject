@@ -1,4 +1,4 @@
-package com.capstone.arabicmorph
+package com.capstone.arabicmorph.view
 
 import android.Manifest
 import android.os.Build
@@ -22,6 +22,9 @@ import java.util.concurrent.TimeUnit
 import androidx.work.PeriodicWorkRequestBuilder
 import androidx.work.WorkInfo
 import androidx.work.WorkManager
+import com.capstone.arabicmorph.R
+import com.capstone.arabicmorph.view.appinfo.AppInfoFragment
+import com.capstone.arabicmorph.view.verbconjugator.VerbConjugatorFragment
 
 @Suppress("DEPRECATION")
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {

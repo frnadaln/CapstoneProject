@@ -1,4 +1,4 @@
-package com.capstone.arabicmorph
+package com.capstone.arabicmorph.view.verbconjugator
 
 import android.annotation.SuppressLint
 import android.os.Bundle
@@ -11,8 +11,11 @@ import android.widget.LinearLayout
 import android.widget.RelativeLayout
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentTransaction
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.capstone.arabicmorph.R
+import com.capstone.arabicmorph.view.appinfo.AppInfoFragment
 
 class VerbConjugatorFragment : Fragment() {
 
@@ -25,10 +28,6 @@ class VerbConjugatorFragment : Fragment() {
     private lateinit var searchButton: View
     private lateinit var searchInput: EditText
     private val data = mutableListOf<Array<String>>()
-
-    interface DrawerToggleListener {
-        fun onMenuIconClicked()
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -57,6 +56,10 @@ class VerbConjugatorFragment : Fragment() {
             }
         }
 
+        helpSection.setOnClickListener {
+            openAppInfoFragment()
+        }
+
         return view
     }
 
@@ -79,5 +82,13 @@ class VerbConjugatorFragment : Fragment() {
         imageStack.visibility = View.GONE
         helpSection.visibility = View.GONE
         resultLayout.visibility = View.VISIBLE
+    }
+
+    private fun openAppInfoFragment() {
+        val appInfoFragment = AppInfoFragment()
+        val transaction: FragmentTransaction = parentFragmentManager.beginTransaction()
+        transaction.replace(R.id.container, appInfoFragment)
+        transaction.addToBackStack(null)
+        transaction.commit()
     }
 }

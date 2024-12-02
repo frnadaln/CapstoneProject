@@ -8,7 +8,6 @@ import android.os.Looper
 import android.view.animation.AnimationUtils
 import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
-import com.capstone.arabicmorph.MainActivity
 import com.capstone.arabicmorph.R
 
 @Suppress("DEPRECATION")

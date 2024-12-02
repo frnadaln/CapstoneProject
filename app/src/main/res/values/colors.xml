@@ -14,4 +14,6 @@
     <color name="custom_color">#D49B9B</color>
     <color name="white">#FFFFFF</color>
     <color name="black">#000000</color>
+    <color name="bottomnav_background">#EECACA</color>
+    <color name="navdrawer_background">#FFF6F6</color>
 </resources>

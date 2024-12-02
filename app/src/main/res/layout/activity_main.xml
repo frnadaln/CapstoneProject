@@ -34,7 +34,10 @@
             android:layout_height="match_parent"
             android:layout_gravity="start"
             android:fitsSystemWindows="true"
-            app:menu="@menu/navigation_menu" />
+            android:background="@color/navdrawer_background"
+            app:menu="@menu/navigation_menu"
+            app:itemIconTint="@color/black"
+            app:itemTextColor="@color/black"/>
 
     </androidx.drawerlayout.widget.DrawerLayout>
 
@@ -44,5 +47,8 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
         android:fitsSystemWindows="true"
-        app:menu="@menu/bottom_navigation_menu" />
+        android:background="@color/bottomnav_background"
+        app:menu="@menu/bottom_navigation_menu"
+        app:itemIconTint="@color/black"
+        app:itemTextColor="@color/black" />
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
