@@ -15,6 +15,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.capstone.arabicmorph.R
+import com.google.android.material.progressindicator.LinearProgressIndicator
 
 class JamidDetectorFragment : Fragment() {
 
@@ -28,6 +29,7 @@ class JamidDetectorFragment : Fragment() {
     private lateinit var xpCounter: TextView
     private lateinit var backgroundImage: ImageView
     private lateinit var overlayImage: ImageView
+    private lateinit var progressIndicator: LinearProgressIndicator
 
     private var currentXP = 0
 
@@ -47,6 +49,7 @@ class JamidDetectorFragment : Fragment() {
         xpCounter = view.findViewById(R.id.xp_counter)
         backgroundImage = view.findViewById(R.id.background_image)
         overlayImage = view.findViewById(R.id.overlay_image)
+        progressIndicator = view.findViewById(R.id.progressIndicator)
 
         updateXPCounter()
 
@@ -76,11 +79,26 @@ class JamidDetectorFragment : Fragment() {
             return
         }
 
-        if (inputWord.lowercase() == "jamid") {
-            displayResult(inputWord, getString(R.string.example_result_description))
-            incrementXP()
+        showLoading(true)
+
+        searchBar.postDelayed({
+            if (inputWord.lowercase() == "jamid") {
+                displayResult(inputWord, getString(R.string.example_result_description))
+                incrementXP()
+            } else {
+                displayError()
+            }
+
+            showLoading(false)
+
+        }, 2000)
+    }
+
+    private fun showLoading(isLoading: Boolean) {
+        if (isLoading) {
+            progressIndicator.visibility = View.VISIBLE
         } else {
-            displayError()
+            progressIndicator.visibility = View.GONE
         }
     }
 

@@ -31,7 +31,7 @@ class HistoryFragment : Fragment() {
 
         setupRecyclerView()
         checkHistory()
-        startImageAnimation()  // Start the animation
+        startImageAnimation()
     }
 
     private fun setupRecyclerView() {
@@ -55,21 +55,17 @@ class HistoryFragment : Fragment() {
         }
     }
 
-    // Start the animation for background image and other elements
     private fun startImageAnimation() {
-        // Animation for background image moving horizontally
         val backgroundAnim = ObjectAnimator.ofFloat(binding.backgroundImage, "translationX", -30f, 30f)
-        backgroundAnim.duration = 6000 // Duration of the animation
+        backgroundAnim.duration = 6000
         backgroundAnim.repeatCount = ObjectAnimator.INFINITE
         backgroundAnim.repeatMode = ObjectAnimator.REVERSE
 
-        // AnimatorSet to apply the animation to the background image
         val animatorSet = AnimatorSet().apply {
-            playTogether(backgroundAnim) // Play the animation together with other elements
+            playTogether(backgroundAnim)
         }
         animatorSet.start()
 
-        // Fade-in animation for TextView elements
         val title = ObjectAnimator.ofFloat(binding.emptyStateTextView, View.ALPHA, 1f).setDuration(100)
         val revealText = ObjectAnimator.ofFloat(binding.revealText, View.ALPHA, 1f).setDuration(100)
 
