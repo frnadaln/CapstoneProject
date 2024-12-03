@@ -12,6 +12,7 @@ import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
+import androidx.fragment.app.Fragment
 import com.capstone.arabicmorph.view.history.HistoryFragment
 import com.capstone.arabicmorph.view.jamiddetector.JamidDetectorFragment
 import com.capstone.arabicmorph.view.setting.SettingFragment
@@ -32,67 +33,29 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     private lateinit var drawerLayout: DrawerLayout
     private lateinit var toolbar: Toolbar
     private lateinit var bottomNavigationView: BottomNavigationView
+    private lateinit var navigationView: NavigationView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
         customizeStatusBar()
-
         scheduleReminder()
 
         toolbar = findViewById(R.id.toolbar)
         setSupportActionBar(toolbar)
 
         drawerLayout = findViewById(R.id.drawer_layout)
-        val navigationView: NavigationView = findViewById(R.id.navigation_view)
+        navigationView = findViewById(R.id.navigation_view)
         navigationView.setNavigationItemSelectedListener(this)
 
         bottomNavigationView = findViewById(R.id.bottom_navigation)
         bottomNavigationView.setOnNavigationItemSelectedListener { item ->
-            when (item.itemId) {
-                R.id.nav_verb_conjugator -> {
-                    val verbConjugatorFragment = VerbConjugatorFragment()
-                    supportFragmentManager.beginTransaction()
-                        .setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out)
-                        .replace(R.id.main_content, verbConjugatorFragment)
-                        .commit()
-                    toolbar.title = "Verb Conjugator"
-                    return@setOnNavigationItemSelectedListener true
-                }
-
-                R.id.nav_history -> {
-                    val historyFragment = HistoryFragment()
-                    supportFragmentManager.beginTransaction()
-                        .setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out)
-                        .replace(R.id.main_content, historyFragment)
-                        .commit()
-                    toolbar.title = "History"
-                    return@setOnNavigationItemSelectedListener true
-                }
-
-                R.id.nav_jamid_detector -> {
-                    val jamidDetectorFragment = JamidDetectorFragment()
-                    supportFragmentManager.beginTransaction()
-                        .setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out)
-                        .replace(R.id.main_content, jamidDetectorFragment)
-                        .commit()
-                    toolbar.title = "Jamid Detector"
-                    return@setOnNavigationItemSelectedListener true
-                }
-
-                else -> false
-            }
+            handleBottomNavigation(item)
         }
 
         if (savedInstanceState == null) {
-            supportFragmentManager.beginTransaction()
-                .setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out)
-                .replace(R.id.main_content, VerbConjugatorFragment())
-                .commit()
-
-            toolbar.title = "Verb Conjugator"
-
+            replaceFragment(VerbConjugatorFragment(), "Verb Conjugator")
             bottomNavigationView.selectedItemId = R.id.nav_verb_conjugator
         }
 
@@ -108,6 +71,11 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         if (Build.VERSION.SDK_INT >= 33) {
             requestPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
         }
+
+        supportFragmentManager.addOnBackStackChangedListener {
+            updateToolbarTitle()
+            updateNavigationIndicators()
+        }
     }
 
     private fun customizeStatusBar() {
@@ -120,17 +88,85 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     private fun scheduleReminder() {
         val workManager = WorkManager.getInstance(this)
-        workManager.getWorkInfosByTag("reminder")
-            .get()
-            .let { workInfos ->
-                val isWorkScheduled = workInfos?.any { it.state == WorkInfo.State.ENQUEUED || it.state == WorkInfo.State.RUNNING } == true
-                if (!isWorkScheduled) {
-                    val reminderRequest = PeriodicWorkRequestBuilder<ReminderWorker>(1, TimeUnit.DAYS)
-                        .addTag("reminder")
-                        .build()
-                    workManager.enqueue(reminderRequest)
-                }
+        val workInfos = workManager.getWorkInfosByTag("reminder").get()
+        val isWorkScheduled = workInfos?.any {
+            it.state == WorkInfo.State.ENQUEUED || it.state == WorkInfo.State.RUNNING
+        } == true
+
+        if (!isWorkScheduled) {
+            val reminderRequest = PeriodicWorkRequestBuilder<ReminderWorker>(1, TimeUnit.DAYS)
+                .addTag("reminder")
+                .build()
+            workManager.enqueue(reminderRequest)
+        }
+    }
+
+    private fun replaceFragment(fragment: Fragment, title: String) {
+        val currentFragment = supportFragmentManager.findFragmentById(R.id.main_content)
+        if (currentFragment?.javaClass == fragment.javaClass) return // Avoid redundant replacements
+
+        supportFragmentManager.beginTransaction()
+            .setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out)
+            .replace(R.id.main_content, fragment)
+            .addToBackStack(title)
+            .commit()
+
+        toolbar.title = title
+    }
+
+    private fun handleBottomNavigation(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.nav_verb_conjugator -> {
+                replaceFragment(VerbConjugatorFragment(), "Verb Conjugator")
+                return true
             }
+            R.id.nav_history -> {
+                replaceFragment(HistoryFragment(), "History")
+                return true
+            }
+            R.id.nav_jamid_detector -> {
+                replaceFragment(JamidDetectorFragment(), "Jamid Detector")
+                return true
+            }
+        }
+        return false
+    }
+
+    private fun updateToolbarTitle() {
+        val currentFragment = supportFragmentManager.findFragmentById(R.id.main_content)
+        toolbar.title = when (currentFragment) {
+            is VerbConjugatorFragment -> "Verb Conjugator"
+            is HistoryFragment -> "History"
+            is JamidDetectorFragment -> "Jamid Detector"
+            is SettingFragment -> "Setting"
+            is AppInfoFragment -> "App Info"
+            else -> ""
+        }
+    }
+
+    private fun updateNavigationIndicators() {
+        val currentFragment = supportFragmentManager.findFragmentById(R.id.main_content)
+
+        when (currentFragment) {
+            is VerbConjugatorFragment -> {
+                bottomNavigationView.selectedItemId = R.id.nav_verb_conjugator
+                navigationView.setCheckedItem(R.id.nav_verb_conjugator)
+            }
+            is HistoryFragment -> {
+                bottomNavigationView.selectedItemId = R.id.nav_history
+                navigationView.setCheckedItem(R.id.nav_history)
+            }
+            is JamidDetectorFragment -> {
+                bottomNavigationView.selectedItemId = R.id.nav_jamid_detector
+                navigationView.setCheckedItem(R.id.nav_jamid_detector)
+            }
+            is SettingFragment -> {
+                navigationView.setCheckedItem(R.id.nav_setting)
+            }
+            is AppInfoFragment -> {
+                navigationView.setCheckedItem(R.id.nav_app_info)
+            }
+        }
     }
 
     @Deprecated("This method has been deprecated in favor of using the\n      {@link OnBackPressedDispatcher} via {@link #getOnBackPressedDispatcher()}.\n      The OnBackPressedDispatcher controls how back button events are dispatched\n      to one or more {@link OnBackPressedCallback} objects.")
@@ -144,57 +180,24 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            R.id.nav_verb_conjugator -> {
-                val verbConjugatorFragment = VerbConjugatorFragment()
-                supportFragmentManager.beginTransaction()
-                    .setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out)
-                    .replace(R.id.main_content, verbConjugatorFragment)
-                    .commit()
-                toolbar.title = "Verb Conjugator"
-                bottomNavigationView.visibility = View.VISIBLE
-            }
-            R.id.nav_jamid_detector -> {
-                val jamidDetectorFragment = JamidDetectorFragment()
-                supportFragmentManager.beginTransaction()
-                    .setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out)
-                    .replace(R.id.main_content, jamidDetectorFragment)
-                    .commit()
-                toolbar.title = "Jamid Detector"
-                bottomNavigationView.visibility = View.VISIBLE
-            }
-            R.id.nav_setting -> {
-                val settingFragment = SettingFragment()
-                supportFragmentManager.beginTransaction()
-                    .setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out)
-                    .replace(R.id.main_content, settingFragment)
-                    .commit()
-                toolbar.title = "Setting"
-                bottomNavigationView.visibility = View.VISIBLE
-            }
-            R.id.nav_app_info -> {
-                val appInfoFragment = AppInfoFragment()
-                supportFragmentManager.beginTransaction()
-                    .setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out)
-                    .replace(R.id.main_content, appInfoFragment)
-                    .commit()
-                toolbar.title = "App Info"
-                bottomNavigationView.visibility = View.VISIBLE
-            }
+            R.id.nav_verb_conjugator -> replaceFragment(VerbConjugatorFragment(), "Verb Conjugator")
+            R.id.nav_history -> replaceFragment(HistoryFragment(), "History")
+            R.id.nav_jamid_detector -> replaceFragment(JamidDetectorFragment(), "Jamid Detector")
+            R.id.nav_setting -> replaceFragment(SettingFragment(), "Setting")
+            R.id.nav_app_info -> replaceFragment(AppInfoFragment(), "App Info")
         }
-        val navigationView: NavigationView = findViewById(R.id.navigation_view)
         navigationView.setCheckedItem(item.itemId)
         drawerLayout.closeDrawer(GravityCompat.START)
         return true
     }
 
     private val requestPermissionLauncher =
-        registerForActivityResult(
-            ActivityResultContracts.RequestPermission()
-        ) { isGranted: Boolean ->
-            if (isGranted) {
-                Toast.makeText(this, "Notifications authorization granted", Toast.LENGTH_SHORT).show()
+        registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted ->
+            val message = if (isGranted) {
+                "Notifications authorization granted"
             } else {
-                Toast.makeText(this, "Notifications authorization rejected", Toast.LENGTH_SHORT).show()
+                "Notifications authorization rejected"
             }
+            Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
         }
 }
