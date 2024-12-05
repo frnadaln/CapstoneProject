@@ -14,6 +14,7 @@ import android.widget.RelativeLayout
 import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import com.capstone.arabicmorph.R
 import com.google.android.material.progressindicator.LinearProgressIndicator
 
@@ -32,6 +33,10 @@ class JamidDetectorFragment : Fragment() {
     private lateinit var progressIndicator: LinearProgressIndicator
 
     private var currentXP = 0
+
+    private val viewModel: JamidDetectorViewModel by viewModels {
+        JamidDetectorViewModelFactory(requireActivity().application)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -68,6 +73,8 @@ class JamidDetectorFragment : Fragment() {
 
         startImageAnimation()
 
+        observeViewModel()
+
         return view
     }
 
@@ -80,26 +87,21 @@ class JamidDetectorFragment : Fragment() {
         }
 
         showLoading(true)
+        viewModel.predictJamid(inputWord)
+    }
 
-        searchBar.postDelayed({
-            if (inputWord.lowercase() == "jamid") {
-                displayResult(inputWord, getString(R.string.example_result_description))
-                incrementXP()
-            } else {
-                displayError()
-            }
-
+    private fun observeViewModel() {
+        viewModel.result.observe(viewLifecycleOwner) { result ->
             showLoading(false)
-
-        }, 2000)
+            result.fold(
+                onSuccess = { displayResult(it.text, it.prediction) },
+                onFailure = { displayError(it.message ?: getString(R.string.word_not_found_please_try_again)) }
+            )
+        }
     }
 
     private fun showLoading(isLoading: Boolean) {
-        if (isLoading) {
-            progressIndicator.visibility = View.VISIBLE
-        } else {
-            progressIndicator.visibility = View.GONE
-        }
+        progressIndicator.visibility = if (isLoading) View.VISIBLE else View.GONE
     }
 
     private fun displayResult(word: String, description: String) {
@@ -111,11 +113,12 @@ class JamidDetectorFragment : Fragment() {
         errorMessage.visibility = View.GONE
     }
 
-    private fun displayError() {
+    private fun displayError(message: String) {
         layoutInitial.visibility = View.GONE
         layoutResult.visibility = View.VISIBLE
 
         errorMessage.visibility = View.VISIBLE
+        errorMessage.text = message
         resultWord.text = ""
         resultDescription.text = ""
     }
