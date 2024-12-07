@@ -3,6 +3,7 @@ package com.capstone.arabicmorph.view.jamiddetector
 import android.animation.AnimatorSet
 import android.animation.ObjectAnimator
 import android.os.Bundle
+import android.util.Log
 import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
@@ -17,6 +18,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.capstone.arabicmorph.R
 import com.google.android.material.progressindicator.LinearProgressIndicator
+import androidx.activity.OnBackPressedCallback
 
 
 class JamidDetectorFragment : Fragment() {
@@ -34,6 +36,7 @@ class JamidDetectorFragment : Fragment() {
     private lateinit var progressIndicator: LinearProgressIndicator
 
     private var currentXP = 0
+    private var lastSearchedWord: String = ""
 
     private val viewModel: JamidDetectorViewModel by viewModels {
         JamidDetectorViewModelFactory()
@@ -76,7 +79,27 @@ class JamidDetectorFragment : Fragment() {
 
         observeViewModel()
 
+        requireActivity().onBackPressedDispatcher.addCallback(
+            viewLifecycleOwner,
+            object : OnBackPressedCallback(true) {
+                override fun handleOnBackPressed() {
+                    handleBackPressed()
+                }
+            }
+        )
+
         return view
+    }
+
+    private fun handleBackPressed() {
+        if (layoutResult.visibility == View.VISIBLE) {
+            layoutResult.visibility = View.GONE
+            layoutInitial.visibility = View.VISIBLE
+            searchBar.setText(lastSearchedWord)
+            showLoading(false)
+        } else {
+            requireActivity().finish()
+        }
     }
 
     private fun processSearchInput() {
@@ -87,22 +110,40 @@ class JamidDetectorFragment : Fragment() {
             return
         }
 
+        lastSearchedWord = inputWord
+
         showLoading(true)
         viewModel.predictJamid(inputWord)
     }
 
     private fun observeViewModel() {
         viewModel.result.observe(viewLifecycleOwner) { result ->
-            showLoading(false)
+            Log.d("JamidDetectorFragment", "Result received: $result")
+
+            if (result == null) return@observe
+
             result.fold(
-                onSuccess = { displayResult(it.text, it.prediction) },
-                onFailure = { displayError(it.message ?: getString(R.string.word_not_found_please_try_again)) }
+                onSuccess = {
+                    showLoading(false)
+                    displayResult(it.text, it.prediction)
+                    incrementXP()
+                },
+                onFailure = {
+                    showLoading(false)
+                    displayError(it.message ?: getString(R.string.word_not_found_please_try_again))
+                }
             )
         }
     }
 
+
     private fun showLoading(isLoading: Boolean) {
-        progressIndicator.visibility = if (isLoading) View.VISIBLE else View.GONE
+        if (isLoading) {
+            progressIndicator.visibility = View.VISIBLE
+            progressIndicator.isIndeterminate = true
+        } else {
+            progressIndicator.visibility = View.GONE
+        }
     }
 
     private fun displayResult(word: String, description: String) {
