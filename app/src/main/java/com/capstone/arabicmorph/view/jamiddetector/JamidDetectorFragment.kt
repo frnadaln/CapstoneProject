@@ -18,6 +18,7 @@ import androidx.fragment.app.viewModels
 import com.capstone.arabicmorph.R
 import com.google.android.material.progressindicator.LinearProgressIndicator
 
+
 class JamidDetectorFragment : Fragment() {
 
     private lateinit var layoutInitial: RelativeLayout
