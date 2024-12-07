@@ -35,7 +35,7 @@ class JamidDetectorFragment : Fragment() {
     private var currentXP = 0
 
     private val viewModel: JamidDetectorViewModel by viewModels {
-        JamidDetectorViewModelFactory(requireActivity().application)
+        JamidDetectorViewModelFactory()
     }
 
     override fun onCreateView(
