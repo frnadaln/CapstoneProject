@@ -22,6 +22,9 @@ import com.google.android.material.progressindicator.LinearProgressIndicator
 import androidx.activity.OnBackPressedCallback
 import com.capstone.arabicmorph.gamification.DailyChallengeScheduler
 import com.capstone.arabicmorph.gamification.util.NotificationUtils
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 
 class JamidDetectorFragment : Fragment() {
 
@@ -102,17 +105,14 @@ class JamidDetectorFragment : Fragment() {
     }
 
     private fun saveCurrentXP() {
-        val sharedPreferences = requireContext().getSharedPreferences("UserPreferences", android.content.Context.MODE_PRIVATE)
         val editor = sharedPreferences.edit()
         editor.putInt("CURRENT_XP", currentXP)
         editor.apply()
     }
 
     private fun loadCurrentXP() {
-        val sharedPreferences = requireContext().getSharedPreferences("UserPreferences", android.content.Context.MODE_PRIVATE)
         currentXP = sharedPreferences.getInt("CURRENT_XP", 0)
     }
-
 
     private fun saveWordsSearchedCount() {
         val editor = sharedPreferences.edit()
@@ -121,13 +121,23 @@ class JamidDetectorFragment : Fragment() {
     }
 
     private fun incrementXPIfEligible() {
-        if (wordsSearchedToday % 5 == 0) {
+        val today = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(Date())
+        val lastXPDate = sharedPreferences.getString("lastXPDate", "")
+
+        if (wordsSearchedToday % 5 == 0 && lastXPDate != today) {
             currentXP += 10
-            updateXPCounter()
             saveCurrentXP()
+            saveLastXPDate(today)
+            updateXPCounter()
 
             NotificationUtils().sendChallengeCompletedNotification(requireContext())
         }
+    }
+
+    private fun saveLastXPDate(date: String) {
+        val editor = sharedPreferences.edit()
+        editor.putString("lastXPDate", date)
+        editor.apply()
     }
 
     private fun updateXPCounter() {
