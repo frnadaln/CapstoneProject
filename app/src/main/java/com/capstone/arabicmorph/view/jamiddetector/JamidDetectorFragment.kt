@@ -2,6 +2,7 @@ package com.capstone.arabicmorph.view.jamiddetector
 
 import android.animation.AnimatorSet
 import android.animation.ObjectAnimator
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.Log
 import android.view.KeyEvent
@@ -19,7 +20,8 @@ import androidx.fragment.app.viewModels
 import com.capstone.arabicmorph.R
 import com.google.android.material.progressindicator.LinearProgressIndicator
 import androidx.activity.OnBackPressedCallback
-
+import com.capstone.arabicmorph.gamification.DailyChallengeScheduler
+import com.capstone.arabicmorph.gamification.util.NotificationUtils
 
 class JamidDetectorFragment : Fragment() {
 
@@ -38,6 +40,9 @@ class JamidDetectorFragment : Fragment() {
     private var currentXP = 0
     private var lastSearchedWord: String = ""
 
+    private lateinit var sharedPreferences: SharedPreferences
+    private var wordsSearchedToday = 0
+
     private val viewModel: JamidDetectorViewModel by viewModels {
         JamidDetectorViewModelFactory()
     }
@@ -47,6 +52,9 @@ class JamidDetectorFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.fragment_jamid_detector, container, false)
+
+        sharedPreferences = requireContext().getSharedPreferences("UserPreferences", android.content.Context.MODE_PRIVATE)
+        wordsSearchedToday = sharedPreferences.getInt("wordsSearchedToday", 0)
 
         layoutInitial = view.findViewById(R.id.layout_initial)
         layoutResult = view.findViewById(R.id.layout_result)
@@ -60,7 +68,10 @@ class JamidDetectorFragment : Fragment() {
         overlayImage = view.findViewById(R.id.overlay_image)
         progressIndicator = view.findViewById(R.id.progressIndicator)
 
+        loadCurrentXP()
         updateXPCounter()
+
+        scheduleDailyChallenge()
 
         searchButton.setOnClickListener {
             processSearchInput()
@@ -76,7 +87,6 @@ class JamidDetectorFragment : Fragment() {
         }
 
         startImageAnimation()
-
         observeViewModel()
 
         requireActivity().onBackPressedDispatcher.addCallback(
@@ -89,6 +99,44 @@ class JamidDetectorFragment : Fragment() {
         )
 
         return view
+    }
+
+    private fun saveCurrentXP() {
+        val sharedPreferences = requireContext().getSharedPreferences("UserPreferences", android.content.Context.MODE_PRIVATE)
+        val editor = sharedPreferences.edit()
+        editor.putInt("CURRENT_XP", currentXP)
+        editor.apply()
+    }
+
+    private fun loadCurrentXP() {
+        val sharedPreferences = requireContext().getSharedPreferences("UserPreferences", android.content.Context.MODE_PRIVATE)
+        currentXP = sharedPreferences.getInt("CURRENT_XP", 0)
+    }
+
+
+    private fun saveWordsSearchedCount() {
+        val editor = sharedPreferences.edit()
+        editor.putInt("wordsSearchedToday", wordsSearchedToday)
+        editor.apply()
+    }
+
+    private fun incrementXPIfEligible() {
+        if (wordsSearchedToday % 5 == 0) {
+            currentXP += 10
+            updateXPCounter()
+            saveCurrentXP()
+
+            NotificationUtils().sendChallengeCompletedNotification(requireContext())
+        }
+    }
+
+    private fun updateXPCounter() {
+        xpCounter.text = getString(R.string.xp_counter_text, currentXP)
+    }
+
+    private fun scheduleDailyChallenge() {
+        val scheduler = DailyChallengeScheduler()
+        scheduler.scheduleDailyChallenge(requireContext())
     }
 
     private fun handleBackPressed() {
@@ -111,7 +159,6 @@ class JamidDetectorFragment : Fragment() {
         }
 
         lastSearchedWord = inputWord
-
         showLoading(true)
         viewModel.predictJamid(inputWord)
     }
@@ -126,7 +173,10 @@ class JamidDetectorFragment : Fragment() {
                 onSuccess = {
                     showLoading(false)
                     displayResult(it.text, it.prediction)
-                    incrementXP()
+
+                    wordsSearchedToday++
+                    saveWordsSearchedCount()
+                    incrementXPIfEligible()
                 },
                 onFailure = {
                     showLoading(false)
@@ -135,7 +185,6 @@ class JamidDetectorFragment : Fragment() {
             )
         }
     }
-
 
     private fun showLoading(isLoading: Boolean) {
         if (isLoading) {
@@ -163,15 +212,6 @@ class JamidDetectorFragment : Fragment() {
         errorMessage.text = message
         resultWord.text = ""
         resultDescription.text = ""
-    }
-
-    private fun incrementXP() {
-        currentXP += 10
-        updateXPCounter()
-    }
-
-    private fun updateXPCounter() {
-        xpCounter.text = getString(R.string.xp_counter_text, currentXP)
     }
 
     private fun startImageAnimation() {

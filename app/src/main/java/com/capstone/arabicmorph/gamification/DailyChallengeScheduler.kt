@@ -9,11 +9,18 @@ import java.util.concurrent.TimeUnit
 
 class DailyChallengeScheduler {
     fun scheduleDailyChallenge(context: Context) {
+        val workManager = WorkManager.getInstance(context)
+        val tag = "daily_challenge"
+
+        // Batalkan pekerjaan lama jika ada
+        workManager.cancelAllWorkByTag(tag)
+
         val workRequest = OneTimeWorkRequestBuilder<ChallengeWorker>()
             .setInitialDelay(calculateNextMidnight(), TimeUnit.MILLISECONDS)
+            .addTag(tag)
             .build()
 
-        WorkManager.getInstance(context).enqueue(workRequest)
+        workManager.enqueue(workRequest)
     }
 
     private fun calculateNextMidnight(): Long {

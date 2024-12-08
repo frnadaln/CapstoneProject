@@ -10,11 +10,9 @@ class UserDataManager(context: Context) {
     fun addXp(amount: Int) {
         val editor = sharedPreferences.edit()
         val currentXp = sharedPreferences.getInt("xp", 0)
-        editor.putInt("xp", currentXp + amount)
+        val newXp = (currentXp + amount).coerceAtLeast(0)
+        editor.putInt("xp", newXp)
         editor.apply()
     }
 
-    fun getXp(): Int {
-        return sharedPreferences.getInt("xp", 0)
-    }
 }

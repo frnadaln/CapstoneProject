@@ -12,4 +12,7 @@ interface LearnedWordDao {
 
     @Query("SELECT COUNT(*) FROM learned_words WHERE dateLearned >= :startOfDay AND dateLearned < :endOfDay")
     suspend fun getLearnedWordsCountToday(startOfDay: Long, endOfDay: Long): Int
+
+    @Query("SELECT * FROM learned_words ORDER BY dateLearned DESC")
+    suspend fun getAllLearnedWords(): List<LearnedWord>
 }

@@ -23,13 +23,15 @@ class NotificationUtils {
             ).apply {
                 description = "Channel for challenge completed notifications"
             }
-            notificationManager.createNotificationChannel(channel)
+            if (notificationManager.getNotificationChannel(CHANNEL_ID) == null) {
+                notificationManager.createNotificationChannel(channel)
+            }
         }
 
         val notification = NotificationCompat.Builder(context, CHANNEL_ID)
-            .setContentTitle("Tantangan Harian Selesai!")
-            .setContentText("Selamat! Anda telah mempelajari 5 kata baru dan mendapatkan 10 XP.")
-            .setSmallIcon(R.drawable.ic_notif) // Pastikan ikon ini ada
+            .setContentTitle(context.getString(R.string.challenge_completed))
+            .setContentText(context.getString(R.string.notif_challenge))
+            .setSmallIcon(R.drawable.ic_notif)
             .setPriority(NotificationCompat.PRIORITY_HIGH)
             .build()
 

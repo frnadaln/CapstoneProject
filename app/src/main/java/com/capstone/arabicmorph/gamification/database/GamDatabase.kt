@@ -10,17 +10,19 @@ abstract class GamDatabase : RoomDatabase() {
     abstract fun learnedWordDao(): LearnedWordDao
 
     companion object {
+        @Volatile
         private var instance: GamDatabase? = null
 
         fun getInstance(context: Context): GamDatabase {
-            if (instance == null) {
-                instance = Room.databaseBuilder(
+            return instance ?: synchronized(this) {
+                val newInstance = Room.databaseBuilder(
                     context.applicationContext,
                     GamDatabase::class.java,
                     "learned_words_db"
                 ).build()
+                instance = newInstance
+                newInstance
             }
-            return instance!!
         }
     }
 }

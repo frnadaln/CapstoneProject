@@ -64,5 +64,7 @@
     <string name="xp_counter_initial">XP: 0</string>
     <string name="xp_counter_text">XP: %1$d</string>
     <string name="splash_text">Welcome to ArabicMorph!</string>
+    <string name="challenge_completed">Challenge Completed!</string>
+    <string name="notif_challenge">Congratulations! You\'ve learned 5 new words and earned 10 XP!</string>
 
 </resources>
