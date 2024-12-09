@@ -50,5 +50,5 @@
         android:background="@color/bottomnav_background"
         app:menu="@menu/bottom_navigation_menu"
         app:itemIconTint="@color/black"
-        app:itemTextColor="@color/black" />
+        app:itemTextColor="@color/white" />
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
