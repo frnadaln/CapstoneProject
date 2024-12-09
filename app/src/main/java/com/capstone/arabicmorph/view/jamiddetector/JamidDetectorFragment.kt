@@ -2,6 +2,7 @@ package com.capstone.arabicmorph.view.jamiddetector
 
 import android.animation.AnimatorSet
 import android.animation.ObjectAnimator
+import android.annotation.SuppressLint
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.Log
@@ -9,6 +10,7 @@ import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.EditText
 import android.widget.FrameLayout
 import android.widget.ImageView
@@ -22,6 +24,7 @@ import com.google.android.material.progressindicator.LinearProgressIndicator
 import androidx.activity.OnBackPressedCallback
 import com.capstone.arabicmorph.gamification.DailyChallengeScheduler
 import com.capstone.arabicmorph.gamification.util.NotificationUtils
+import com.capstone.arabicmorph.view.history.historydatabase.HistoryEntity
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
@@ -39,6 +42,7 @@ class JamidDetectorFragment : Fragment() {
     private lateinit var backgroundImage: ImageView
     private lateinit var overlayImage: ImageView
     private lateinit var progressIndicator: LinearProgressIndicator
+    private lateinit var saveButton: Button
 
     private var currentXP = 0
     private var lastSearchedWord: String = ""
@@ -47,9 +51,10 @@ class JamidDetectorFragment : Fragment() {
     private var wordsSearchedToday = 0
 
     private val viewModel: JamidDetectorViewModel by viewModels {
-        JamidDetectorViewModelFactory()
+        JamidDetectorViewModelFactory(requireActivity().application)
     }
 
+    @SuppressLint("MissingInflatedId")
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -70,6 +75,7 @@ class JamidDetectorFragment : Fragment() {
         backgroundImage = view.findViewById(R.id.background_image)
         overlayImage = view.findViewById(R.id.overlay_image)
         progressIndicator = view.findViewById(R.id.progressIndicator)
+        saveButton = view.findViewById(R.id.save_button)
 
         loadCurrentXP()
         updateXPCounter()
@@ -91,6 +97,18 @@ class JamidDetectorFragment : Fragment() {
 
         startImageAnimation()
         observeViewModel()
+
+        saveButton.setOnClickListener {
+            val inputTextValue = searchBar.text.toString().trim()
+            val predictionValue = resultDescription.text.toString().trim()
+
+            if (inputTextValue.isNotEmpty() && predictionValue.isNotEmpty()) {
+                savePredictionToHistory(inputTextValue, predictionValue)
+            } else {
+                Toast.makeText(requireContext(), "No prediction available to save", Toast.LENGTH_SHORT).show()
+            }
+        }
+
 
         requireActivity().onBackPressedDispatcher.addCallback(
             viewLifecycleOwner,
@@ -173,6 +191,16 @@ class JamidDetectorFragment : Fragment() {
         viewModel.predictJamid(inputWord)
     }
 
+    private fun savePredictionToHistory(inputText: String, prediction: String) {
+        val historyEntity = HistoryEntity(
+            inputText = inputText,
+            prediction = prediction,
+            isSuccess = true
+        )
+        viewModel.savePrediction(historyEntity)
+        Toast.makeText(requireContext(), "Prediction saved to history", Toast.LENGTH_SHORT).show()
+    }
+
     private fun observeViewModel() {
         viewModel.result.observe(viewLifecycleOwner) { result ->
             Log.d("JamidDetectorFragment", "Result received: $result")
@@ -239,4 +267,5 @@ class JamidDetectorFragment : Fragment() {
         animatorSet.playTogether(backgroundAnim, overlayAnim)
         animatorSet.start()
     }
+
 }

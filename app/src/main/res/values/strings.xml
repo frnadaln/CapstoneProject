@@ -66,5 +66,8 @@
     <string name="splash_text">Welcome to ArabicMorph!</string>
     <string name="challenge_completed">Challenge Completed!</string>
     <string name="notif_challenge">Congratulations! You\'ve learned 5 new words and earned 10 XP!</string>
+    <string name="delete">Delete history</string>
+    <string name="save">Save to History</string>
+    <string name="prediction_label">Jamid Detector Result</string>
 
 </resources>
