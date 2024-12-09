@@ -1,4 +1,4 @@
-package com.capstone.arabicmorph.view.verbconjugator
+package com.capstone.arabicmorph.ui.adapters
 
 import android.view.LayoutInflater
 import android.view.View
@@ -7,28 +7,30 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.capstone.arabicmorph.R
 
-class ConjugatorResultAdapter(private val data: List<Array<String>>) :
-    RecyclerView.Adapter<ConjugatorResultAdapter.ViewHolder>() {
+class ConjugationAdapter(private var data: List<String>) :
+    RecyclerView.Adapter<ConjugationAdapter.ConjugationViewHolder>() {
 
-    inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        val column1: TextView = view.findViewById(R.id.column1)
-        val column2: TextView = view.findViewById(R.id.column2)
-        val column3: TextView = view.findViewById(R.id.column3)
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ConjugationViewHolder {
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_conjugation, parent, false)
+        return ConjugationViewHolder(view)
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.conjugator_result_item, parent, false)
-        return ViewHolder(view)
-    }
-
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val row = data[position]
-        holder.column1.text = row[0]
-        holder.column2.text = row[1]
-        holder.column3.text = row[2]
+    override fun onBindViewHolder(holder: ConjugationViewHolder, position: Int) {
+        holder.bind(data[position])
     }
 
     override fun getItemCount(): Int = data.size
-}
 
+    fun updateList(newData: List<String>) {
+        data = newData
+        notifyDataSetChanged()
+    }
+
+    class ConjugationViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        private val textView: TextView = itemView.findViewById(R.id.conjugation_text)
+
+        fun bind(item: String) {
+            textView.text = item
+        }
+    }
+}
