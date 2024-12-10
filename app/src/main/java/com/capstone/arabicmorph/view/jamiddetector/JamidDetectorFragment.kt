@@ -79,7 +79,6 @@ class JamidDetectorFragment : Fragment() {
 
         loadCurrentXP()
         updateXPCounter()
-
         scheduleDailyChallenge()
 
         searchButton.setOnClickListener {

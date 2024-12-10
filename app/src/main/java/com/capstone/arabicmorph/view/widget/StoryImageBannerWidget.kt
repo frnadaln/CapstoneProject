@@ -50,7 +50,7 @@ internal fun updateAppWidget(
 ) {
     val intent = Intent(context, StackWidgetService::class.java).apply {
         putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId)
-        data = Uri.parse(toUri(Intent.URI_INTENT_SCHEME).toString()) // Ganti toUri dengan Uri.parse()
+        data = Uri.parse(toUri(Intent.URI_INTENT_SCHEME).toString())
     }
 
     val views = RemoteViews(context.packageName, R.layout.story_image_banner_widget)
