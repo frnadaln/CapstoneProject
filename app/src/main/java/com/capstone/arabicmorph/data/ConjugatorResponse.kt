@@ -11,7 +11,13 @@ data class ConjugatorResponse(
 	val verbInfo: String,
 
 	@field:SerializedName("suggest")
-	val suggest: List<SuggestItem>
+	val suggest: List<SuggestItem>,
+
+	@field:SerializedName("json_member_9_list")
+	val jsonMember9List: List<JsonMember9>,
+
+	@field:SerializedName("json_member_3_list")
+	val jsonMember3List: List<JsonMember3>
 ) : Parcelable
 
 @Parcelize
