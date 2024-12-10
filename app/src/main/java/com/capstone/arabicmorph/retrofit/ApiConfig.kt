@@ -5,7 +5,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 object ApiConfig {
-    const val BASE_URL = "http://qutrub.arabeyes.org/api/"
+    private const val BASE_URL = "http://qutrub.arabeyes.org/api/"
 
     private val okHttpClient = OkHttpClient.Builder().build()
 
