@@ -1,9 +1,12 @@
 package com.capstone.arabicmorph.view.verbconjugator
 
+import android.animation.AnimatorSet
+import android.animation.ObjectAnimator
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.ProgressBar
 import android.widget.RelativeLayout
 import android.widget.Toast
@@ -21,14 +24,16 @@ class VerbConjugatorFragment : Fragment() {
     private lateinit var binding: FragmentVerbConjugatorBinding
     private lateinit var conjugatorViewModel: ConjugatorViewModel
     private lateinit var conjugationAdapter: ConjugationAdapter
-    private lateinit var progressBar: ProgressBar // Added for loading indicator
-    private lateinit var layoutInitial: RelativeLayout // Reference for initial layout
-    private lateinit var layoutResult: RelativeLayout // Reference for result layout
+    private lateinit var progressBar: ProgressBar
+    private lateinit var layoutInitial: RelativeLayout
+    private lateinit var layoutResult: RelativeLayout
+    private lateinit var backgroundImage: ImageView
+    private lateinit var overlayImage: ImageView
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = FragmentVerbConjugatorBinding.inflate(inflater, container, false)
         val root = binding.root
 
@@ -42,9 +47,15 @@ class VerbConjugatorFragment : Fragment() {
             adapter = conjugationAdapter
         }
 
-        progressBar = binding.progressIndicator // Initialize loading indicator
+
+        progressBar = binding.progressIndicator
         layoutInitial = binding.layoutInitial
         layoutResult = binding.layoutResult
+        backgroundImage = binding.backgroundImage
+        overlayImage = binding.overlayImage
+
+        startImageAnimation()
+
 
         // Handle search button click
         binding.searchButtonBackground.setOnClickListener {
@@ -97,7 +108,22 @@ class VerbConjugatorFragment : Fragment() {
         layoutInitial.visibility = View.GONE
         layoutResult.visibility = View.VISIBLE
 
-        // Handle error message display (e.g., TextView for error message)
         Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
+    }
+
+    private fun startImageAnimation() {
+        val backgroundAnim = ObjectAnimator.ofFloat(backgroundImage, "translationX", -30f, 30f)
+        backgroundAnim.duration = 6000
+        backgroundAnim.repeatCount = ObjectAnimator.INFINITE
+        backgroundAnim.repeatMode = ObjectAnimator.REVERSE
+
+        val overlayAnim = ObjectAnimator.ofFloat(overlayImage, "translationX", -30f, 30f)
+        overlayAnim.duration = 6000
+        overlayAnim.repeatCount = ObjectAnimator.INFINITE
+        overlayAnim.repeatMode = ObjectAnimator.REVERSE
+
+        val animatorSet = AnimatorSet()
+        animatorSet.playTogether(backgroundAnim, overlayAnim)
+        animatorSet.start()
     }
 }
