@@ -12,7 +12,6 @@ class DailyChallengeScheduler {
         val workManager = WorkManager.getInstance(context)
         val tag = "daily_challenge"
 
-        // Batalkan pekerjaan lama jika ada
         workManager.cancelAllWorkByTag(tag)
 
         val workRequest = OneTimeWorkRequestBuilder<ChallengeWorker>()

@@ -50,6 +50,8 @@ class JamidDetectorFragment : Fragment() {
     private lateinit var sharedPreferences: SharedPreferences
     private var wordsSearchedToday = 0
 
+    private val uniqueWordsToday: MutableSet<String> = mutableSetOf() // Track unique words searched today
+
     private val viewModel: JamidDetectorViewModel by viewModels {
         JamidDetectorViewModelFactory(requireActivity().application)
     }
@@ -63,6 +65,9 @@ class JamidDetectorFragment : Fragment() {
 
         sharedPreferences = requireContext().getSharedPreferences("UserPreferences", android.content.Context.MODE_PRIVATE)
         wordsSearchedToday = sharedPreferences.getInt("wordsSearchedToday", 0)
+
+        // Load unique words searched today
+        loadUniqueWordsToday()
 
         layoutInitial = view.findViewById(R.id.layout_initial)
         layoutResult = view.findViewById(R.id.layout_result)
@@ -108,7 +113,6 @@ class JamidDetectorFragment : Fragment() {
             }
         }
 
-
         requireActivity().onBackPressedDispatcher.addCallback(
             viewLifecycleOwner,
             object : OnBackPressedCallback(true) {
@@ -119,6 +123,26 @@ class JamidDetectorFragment : Fragment() {
         )
 
         return view
+    }
+
+    private fun loadUniqueWordsToday() {
+        val today = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(Date())
+        val savedDate = sharedPreferences.getString("uniqueWordsDate", "")
+        if (savedDate != today) {
+            uniqueWordsToday.clear() // Reset for a new day
+        } else {
+            sharedPreferences.getStringSet("uniqueWordsToday", emptySet())?.let {
+                uniqueWordsToday.addAll(it)
+            }
+        }
+    }
+
+    private fun saveUniqueWordsToday() {
+        val today = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(Date())
+        sharedPreferences.edit()
+            .putStringSet("uniqueWordsToday", uniqueWordsToday)
+            .putString("uniqueWordsDate", today)
+            .apply()
     }
 
     private fun saveCurrentXP() {
@@ -138,23 +162,12 @@ class JamidDetectorFragment : Fragment() {
     }
 
     private fun incrementXPIfEligible() {
-        val today = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(Date())
-        val lastXPDate = sharedPreferences.getString("lastXPDate", "")
-
-        if (wordsSearchedToday % 5 == 0 && lastXPDate != today) {
+        if (uniqueWordsToday.size % 5 == 0) { // Check if 5 unique words are searched
             currentXP += 10
             saveCurrentXP()
-            saveLastXPDate(today)
             updateXPCounter()
-
             NotificationUtils().sendChallengeCompletedNotification(requireContext())
         }
-    }
-
-    private fun saveLastXPDate(date: String) {
-        val editor = sharedPreferences.edit()
-        editor.putString("lastXPDate", date)
-        editor.apply()
     }
 
     private fun updateXPCounter() {
@@ -211,9 +224,10 @@ class JamidDetectorFragment : Fragment() {
                     showLoading(false)
                     displayResult(it.text, it.prediction)
 
-                    wordsSearchedToday++
-                    saveWordsSearchedCount()
-                    incrementXPIfEligible()
+                    if (uniqueWordsToday.add(it.text)) { // Add to unique words
+                        saveUniqueWordsToday()
+                        incrementXPIfEligible()
+                    }
                 },
                 onFailure = {
                     showLoading(false)
@@ -266,5 +280,4 @@ class JamidDetectorFragment : Fragment() {
         animatorSet.playTogether(backgroundAnim, overlayAnim)
         animatorSet.start()
     }
-
 }
