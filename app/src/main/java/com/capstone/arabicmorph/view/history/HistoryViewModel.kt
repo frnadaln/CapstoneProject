@@ -10,12 +10,6 @@ class HistoryViewModel (application: Application) : AndroidViewModel(application
     private val repository: HistoryRepository = HistoryRepository(application)
     val predictHistory: LiveData<List<HistoryEntity>> = repository.getPredictHistory()
 
-    fun savePrediction(history: HistoryEntity) {
-        viewModelScope.launch {
-            repository.insertPredictHistory(history)
-        }
-    }
-
     fun deletePrediction(history: HistoryEntity) {
         viewModelScope.launch {
             repository.deletePredictHistory(history)

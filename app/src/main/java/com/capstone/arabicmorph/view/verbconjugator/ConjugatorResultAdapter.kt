@@ -1,5 +1,6 @@
-package com.capstone.arabicmorph.ui.adapters
+package com.capstone.arabicmorph.view.verbconjugator
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -21,6 +22,7 @@ class ConjugationAdapter(private var data: List<String>) :
 
     override fun getItemCount(): Int = data.size
 
+    @SuppressLint("NotifyDataSetChanged")
     fun updateList(newData: List<String>) {
         data = newData
         notifyDataSetChanged()

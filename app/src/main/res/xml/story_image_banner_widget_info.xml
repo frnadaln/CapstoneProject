@@ -6,7 +6,7 @@
     android:initialLayout="@layout/story_image_banner_widget"
     android:minWidth="40dp"
     android:minHeight="40dp"
-    android:previewImage="@drawable/example"
+    android:previewImage="@drawable/icon"
     android:previewLayout="@layout/story_image_banner_widget"
     android:resizeMode="horizontal|vertical"
     android:targetCellWidth="1"

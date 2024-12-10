@@ -11,6 +11,12 @@
         android:layout_height="match_parent"
         android:adjustViewBounds="true"
         android:importantForAccessibility="no"
-        android:scaleType="fitCenter"
-        />
+        android:scaleType="fitCenter"/>
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="16sp"
+        android:padding="8dp"/>
 </LinearLayout>
