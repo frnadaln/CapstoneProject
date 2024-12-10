@@ -1,4 +1,10 @@
 package com.capstone.arabicmorph.view.widget
 
-class StackWidgetService {
+import android.content.Intent
+import android.widget.RemoteViewsService
+
+class StackWidgetService : RemoteViewsService() {
+    override fun onGetViewFactory(intent: Intent): RemoteViewsFactory {
+        return StackRemoteViewsFactory(applicationContext)
+    }
 }

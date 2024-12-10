@@ -43,6 +43,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         scheduleReminder()
 
         toolbar = findViewById(R.id.toolbar)
+        toolbar.setTitleTextColor(ContextCompat.getColor(this, android.R.color.white))
         setSupportActionBar(toolbar)
 
         drawerLayout = findViewById(R.id.drawer_layout)
@@ -59,7 +60,10 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             bottomNavigationView.selectedItemId = R.id.nav_verb_conjugator
         }
 
-        toolbar.setNavigationIcon(R.drawable.icon_menu)
+        val navigationIcon = ContextCompat.getDrawable(this, R.drawable.icon_menu)?.apply {
+            setTint(ContextCompat.getColor(this@MainActivity, android.R.color.white))
+        }
+        toolbar.navigationIcon = navigationIcon
         toolbar.setNavigationOnClickListener {
             if (!drawerLayout.isDrawerOpen(GravityCompat.START)) {
                 drawerLayout.openDrawer(GravityCompat.START)

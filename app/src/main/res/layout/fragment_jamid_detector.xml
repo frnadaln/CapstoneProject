@@ -149,10 +149,20 @@
             android:layout_marginTop="20dp"
             android:layout_below="@id/result_word"
             android:paddingHorizontal="16dp"
-            android:text="@string/description_will_be_shown_here"
             android:textSize="14sp"
             android:textColor="@color/text_primary"
             android:gravity="center" />
+
+        <Button
+            android:id="@+id/save_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/save"
+            android:layout_below="@id/result_description"
+            android:layout_marginTop="50dp"
+            android:layout_centerHorizontal="true"
+            android:visibility="visible"
+            android:backgroundTint="@color/text_secondary" />
 
         <TextView
             android:id="@+id/error_message"

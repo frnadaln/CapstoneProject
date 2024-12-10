@@ -8,14 +8,14 @@
     <style name="Theme.ArabicMorph" parent="Base.Theme.ArabicMorph" />
     <style name="ArabicMorphStyle">
         <item name="android:textSize">20sp</item>
-        <item name="android:textColor">@color/text_primary</item>
+        <item name="android:textColor">@color/white</item>
         <item name="android:fontFamily">sans-serif</item>
         <item name="android:statusBarColor">@color/custom_color</item>
     </style>
 
     <style name="CustomToolbarStyle">
         <item name="android:background">@color/header_background</item>
-        <item name="android:titleTextColor" tools:targetApi="m">@android:color/black</item>
+        <item name="android:titleTextColor" tools:targetApi="m">@android:color/white</item>
     </style>
 
     <style name="SearchInputTextStyle">
@@ -34,11 +34,6 @@
         <item name="android:textSize">12sp</item>
         <item name="android:textColor">@color/text_primary</item>
         <item name="android:fontFamily">sans-serif</item>
-    </style>
-
-    <style name="favourite">
-        <item name="android:textSize">18sp</item>
-        <item name="android:textColor">@color/text_primary</item>
     </style>
 
     <style name="daily_notif">
