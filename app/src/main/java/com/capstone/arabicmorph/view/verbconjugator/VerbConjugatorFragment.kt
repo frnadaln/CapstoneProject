@@ -2,7 +2,11 @@ package com.capstone.arabicmorph.view.verbconjugator
 
 import android.animation.AnimatorSet
 import android.animation.ObjectAnimator
+import android.content.Context
 import android.content.SharedPreferences
+import android.net.ConnectivityManager
+import android.net.NetworkCapabilities
+import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -11,6 +15,7 @@ import android.widget.ImageView
 import android.widget.ProgressBar
 import android.widget.RelativeLayout
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -69,7 +74,7 @@ class VerbConjugatorFragment : Fragment() {
         overlayImage = binding.overlayImage
 
         sharedPreferences =
-            requireContext().getSharedPreferences("UserPreferences", android.content.Context.MODE_PRIVATE)
+            requireContext().getSharedPreferences("UserPreferences", Context.MODE_PRIVATE)
         wordsSearchedToday = sharedPreferences.getInt("wordsSearchedToday", 0)
 
         loadUniqueWordsToday()
@@ -180,6 +185,14 @@ class VerbConjugatorFragment : Fragment() {
     private fun scheduleDailyChallenge() {
         val scheduler = DailyChallengeScheduler()
         scheduler.scheduleDailyChallenge(requireContext())
+    }
+
+    @RequiresApi(Build.VERSION_CODES.M)
+    fun isInternetAvailable(context: Context): Boolean {
+        val connectivityManager = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        val network = connectivityManager.activeNetwork ?: return false
+        val networkCapabilities = connectivityManager.getNetworkCapabilities(network) ?: return false
+        return networkCapabilities.hasCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET)
     }
 
     private fun startImageAnimation() {

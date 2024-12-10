@@ -22,6 +22,11 @@ import com.capstone.arabicmorph.view.history.historydatabase.HistoryEntity
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
+import android.content.Context
+import android.net.ConnectivityManager
+import android.net.NetworkCapabilities
+import android.os.Build
+import androidx.annotation.RequiresApi
 
 class JamidDetectorFragment : Fragment() {
 
@@ -40,6 +45,7 @@ class JamidDetectorFragment : Fragment() {
         JamidDetectorViewModelFactory(requireActivity().application)
     }
 
+    @RequiresApi(Build.VERSION_CODES.M)
     @SuppressLint("MissingInflatedId")
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -48,7 +54,7 @@ class JamidDetectorFragment : Fragment() {
         _binding = FragmentJamidDetectorBinding.inflate(inflater, container, false)
 
         sharedPreferences =
-            requireContext().getSharedPreferences("UserPreferences", android.content.Context.MODE_PRIVATE)
+            requireContext().getSharedPreferences("UserPreferences", Context.MODE_PRIVATE)
         wordsSearchedToday = sharedPreferences.getInt("wordsSearchedToday", 0)
 
         loadUniqueWordsToday()
@@ -72,6 +78,7 @@ class JamidDetectorFragment : Fragment() {
         return binding.root
     }
 
+    @RequiresApi(Build.VERSION_CODES.M)
     private fun setupListeners() {
         binding.apply {
             searchButtonBackground.setOnClickListener {
@@ -161,7 +168,13 @@ class JamidDetectorFragment : Fragment() {
         }
     }
 
+    @RequiresApi(Build.VERSION_CODES.M)
     private fun processSearchInput() {
+        if (!isInternetAvailable(requireContext())) {
+            Toast.makeText(requireContext(), "No internet connection", Toast.LENGTH_SHORT).show()
+            return
+        }
+
         val inputWord = binding.enterWord.text.toString().trim()
 
         if (inputWord.isEmpty()) {
@@ -173,6 +186,7 @@ class JamidDetectorFragment : Fragment() {
         showLoading(true)
         viewModel.predictJamid(inputWord)
     }
+
 
     private fun savePredictionToHistory(inputText: String, prediction: String) {
         val historyEntity = HistoryEntity(
@@ -233,6 +247,14 @@ class JamidDetectorFragment : Fragment() {
             resultWord.text = ""
             resultDescription.text = ""
         }
+    }
+
+    @RequiresApi(Build.VERSION_CODES.M)
+    fun isInternetAvailable(context: Context): Boolean {
+        val connectivityManager = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        val network = connectivityManager.activeNetwork ?: return false
+        val networkCapabilities = connectivityManager.getNetworkCapabilities(network) ?: return false
+        return networkCapabilities.hasCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET)
     }
 
     private fun startImageAnimation() {
