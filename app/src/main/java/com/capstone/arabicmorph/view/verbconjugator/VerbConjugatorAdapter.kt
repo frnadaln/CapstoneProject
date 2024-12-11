@@ -1,9 +1,7 @@
 package com.capstone.arabicmorph.view.verbconjugator
 
-import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.capstone.arabicmorph.data.JsonMember3
 import com.capstone.arabicmorph.data.JsonMember9
@@ -23,49 +21,43 @@ class ConjugationAdapter : RecyclerView.Adapter<ConjugationAdapter.ConjugationVi
     }
 
     override fun onBindViewHolder(holder: ConjugationViewHolder, position: Int) {
-        val item = suggestItems[position]
-        holder.bind(item)
+        val suggestItem = suggestItems[position]
+        val jsonMember9 = jsonMember9List.getOrNull(position)
+        val jsonMember3 = jsonMember3List.getOrNull(position)
+
+        holder.bind(suggestItem, jsonMember9, jsonMember3)
     }
 
-    override fun getItemCount(): Int = suggestItems.size
+    override fun getItemCount(): Int {
+        return suggestItems.size
+    }
 
-    fun submitList(
-        newSuggestItems: List<SuggestItem>,
-        newJsonMember9List: List<JsonMember9>,
-        newJsonMember3List: List<JsonMember3>
+    fun setData(
+        suggestItems: List<SuggestItem>,
+        jsonMember9List: List<JsonMember9>,
+        jsonMember3List: List<JsonMember3>
     ) {
-        val diffResult = DiffUtil.calculateDiff(object : DiffUtil.Callback() {
-            override fun getOldListSize(): Int = suggestItems.size
-            override fun getNewListSize(): Int = newSuggestItems.size
-
-            override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
-                return suggestItems[oldItemPosition].verb == newSuggestItems[newItemPosition].verb
-            }
-
-            override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
-                return suggestItems[oldItemPosition] == newSuggestItems[newItemPosition]
-            }
-        })
-        diffResult.dispatchUpdatesTo(this)
-
-        // Menyimpan data yang diterima
-        suggestItems = newSuggestItems
-        jsonMember9List = newJsonMember9List
-        jsonMember3List = newJsonMember3List
+        this.suggestItems = suggestItems
+        this.jsonMember9List = jsonMember9List
+        this.jsonMember3List = jsonMember3List
     }
 
-    class ConjugationViewHolder(private val binding: ConjugatorResultItemBinding) :
+    inner class ConjugationViewHolder(private val binding: ConjugatorResultItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
-        @SuppressLint("SetTextI18n")
-        fun bind(item: SuggestItem) {
-            binding.verbText.text = item.verb
-            binding.harakaText.text = item.haraka
-            binding.transitiveText.text = item.transitive.toString()
+        fun bind(suggestItem: SuggestItem, jsonMember9: JsonMember9?, jsonMember3: JsonMember3?) {
+            binding.verbText.text = suggestItem.verb
+            binding.harakaText.text = suggestItem.haraka
+            binding.transitiveText.text = suggestItem.transitive.toString()
 
-            binding.madhiText.text = "-"
-            binding.mudhoriText.text = "-"
-            binding.amarText.text = "-"
+            jsonMember9?.let {
+                binding.madhiText.text = it.jsonMember1
+                binding.mudhoriText.text = it.jsonMember2
+            }
+
+            jsonMember3?.let {
+                binding.amarText.text = it.jsonMember6
+            }
         }
     }
 }
