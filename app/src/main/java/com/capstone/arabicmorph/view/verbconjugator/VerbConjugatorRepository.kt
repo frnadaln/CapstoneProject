@@ -9,7 +9,7 @@ class ConjugatorRepository {
     suspend fun getConjugationResults(
         verb: String,
         haraka: String = "u",
-        transitive: Boolean = true,
+        transitive: Int = 1,
         onResult: (ConjugatorResponse?) -> Unit
     ) {
         try {
@@ -34,4 +34,3 @@ class ConjugatorRepository {
         }
     }
 }
-

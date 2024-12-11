@@ -10,6 +10,6 @@ interface ApiService {
     suspend fun getConjugation(
         @Query("verb") verb: String,
         @Query("haraka") haraka: String = "u",
-        @Query("transitive") transitive: Boolean = true
+        @Query("transitive") transitive: Int = 1
     ): ConjugatorResponse
 }

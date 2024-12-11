@@ -13,12 +13,12 @@ class ConjugatorViewModel(private val repository: ConjugatorRepository) : ViewMo
     private val _conjugationResult = MutableLiveData<ConjugatorResponse?>()
     val conjugationResult: LiveData<ConjugatorResponse?> = _conjugationResult
 
-    fun getConjugationResults(verb: String, haraka: String = "u", transitive: Boolean = true) {
+    fun getConjugationResults(verb: String, haraka: String = "u", transitive: Int = 1) {
         viewModelScope.launch {
             Log.d("ViewModel", "Calling getConjugationResults with verb: $verb")
             repository.getConjugationResults(verb, haraka, transitive) { result ->
                 Log.d("ViewModel", "Result from repository: $result")
-                _conjugationResult.postValue(result)  // Update LiveData with the result
+                _conjugationResult.postValue(result)
             }
         }
     }
