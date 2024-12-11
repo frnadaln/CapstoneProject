@@ -11,7 +11,7 @@ data class ConjugatorResponse(
 	val verbInfo: String,
 
 	@field:SerializedName("suggest")
-	val suggest: List<SuggestItem>,
+	val suggest: List<SuggestItem>?,
 
 	@field:SerializedName("json_member_9_list")
 	val jsonMember9List: List<JsonMember9>,
@@ -40,15 +40,15 @@ data class SuggestItem(
 data class JsonMember3(
 
 	@field:SerializedName("6")
-	val jsonMember6: String
+	val jsonMember6: String?
 ) : Parcelable
 
 @Parcelize
 data class JsonMember9(
 
 	@field:SerializedName("1")
-	val jsonMember1: String,
+	val jsonMember1: String?,
 
 	@field:SerializedName("2")
-	val jsonMember2: String
+	val jsonMember2: String?
 ) : Parcelable

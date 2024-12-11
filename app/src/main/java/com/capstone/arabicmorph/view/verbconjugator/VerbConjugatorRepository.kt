@@ -21,7 +21,7 @@ class ConjugatorRepository {
             Log.d("Repository", "Raw Response: $response")
             Log.d("Repository", "Suggest List: ${response.suggest}")
 
-            if (response.suggest.isNotEmpty()) {
+            if (response.suggest?.isNotEmpty() == true) {
                 onResult(response)
             } else {
                 Log.e("ConjugatorRepository", "No results found.")

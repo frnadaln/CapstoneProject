@@ -21,6 +21,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.capstone.arabicmorph.R
 import com.capstone.arabicmorph.databinding.FragmentVerbConjugatorBinding
 import com.capstone.arabicmorph.gamification.DailyChallengeScheduler
@@ -40,6 +41,7 @@ class VerbConjugatorFragment : Fragment() {
     private lateinit var layoutResult: RelativeLayout
     private lateinit var backgroundImage: ImageView
     private lateinit var overlayImage: ImageView
+    private lateinit var recyclerView: RecyclerView
 
     private var currentXP = 0
     private var lastSearchedWord: String = ""
@@ -59,6 +61,16 @@ class VerbConjugatorFragment : Fragment() {
 
         val repository = ConjugatorRepository()
         val viewModelFactory = ConjugatorViewModelFactory(repository)
+
+        recyclerView = binding.resultsRecyclerView
+        progressBar = binding.progressIndicator
+
+        conjugationAdapter = ConjugationAdapter()
+        recyclerView.layoutManager = LinearLayoutManager(context)
+        recyclerView.adapter = conjugationAdapter
+
+        recyclerView.visibility = View.GONE
+        progressBar.visibility = View.VISIBLE
         conjugatorViewModel = ViewModelProvider(this, viewModelFactory)[ConjugatorViewModel::class.java]
 
         conjugationAdapter = ConjugationAdapter()
@@ -117,7 +129,11 @@ class VerbConjugatorFragment : Fragment() {
                 binding.layoutInitial.visibility = View.GONE
                 binding.layoutResult.visibility = View.VISIBLE
                 progressBar.visibility = View.GONE
-                conjugationAdapter.setData(result.suggest, result.jsonMember9List, result.jsonMember3List)
+                result.suggest?.let {
+                    conjugationAdapter.setData(it, result.jsonMember9List, result.jsonMember3List)
+                }
+                result.jsonMember9List?.let { conjugationAdapter.setDataJson(it) } // Memanggil setDataJson
+
                 showLoading()
                 displayResult()
                 hideLoading()
@@ -133,9 +149,11 @@ class VerbConjugatorFragment : Fragment() {
                 displayError()
                 Toast.makeText(requireContext(), "No Result Found", Toast.LENGTH_SHORT).show()
                 hideLoading()
+                recyclerView.visibility = View.VISIBLE
                 Log.d("Fragment", "No results found.")
             }
         })
+
 
 
         binding.helpSection.setOnClickListener {
@@ -147,6 +165,8 @@ class VerbConjugatorFragment : Fragment() {
 
         return root
     }
+
+
 
     private fun displayResult() {
         binding.apply {
