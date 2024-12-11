@@ -78,6 +78,8 @@ class VerbConjugatorFragment : Fragment() {
             layoutManager = LinearLayoutManager(context)
             adapter = conjugationAdapter
         }
+        recyclerView.layoutManager = LinearLayoutManager(requireContext())
+
 
         progressBar = binding.progressIndicator
         layoutInitial = binding.layoutInitial
@@ -117,43 +119,35 @@ class VerbConjugatorFragment : Fragment() {
 
             if (searchText.isNotEmpty()) {
                 showLoading()
-                conjugatorViewModel.getConjugationResults(searchText)
+                conjugatorViewModel.getConjugationResults()
             } else {
                 Toast.makeText(context, "Enter the word you want to search for", Toast.LENGTH_SHORT).show()
             }
             lastSearchedWord = searchText
         }
 
-        conjugatorViewModel.conjugationResult.observe(viewLifecycleOwner, Observer { result ->
-            if (result != null) {
-                binding.layoutInitial.visibility = View.GONE
-                binding.layoutResult.visibility = View.VISIBLE
-                progressBar.visibility = View.GONE
-                result.suggest?.let {
-                    conjugationAdapter.setData(it, result.jsonMember9List, result.jsonMember3List)
-                }
-                result.jsonMember9List?.let { conjugationAdapter.setDataJson(it) } // Memanggil setDataJson
-
-                showLoading()
+        conjugatorViewModel.conjugationResult.observe(viewLifecycleOwner, Observer { response ->
+            if (response != null) {
+                Log.d("VerbConjugator", "API response: $response")
+                conjugationAdapter.setData(
+                    response.verbInfo ?: "",
+                    response.suggest ?: emptyList(),
+                    response.jsonMember9List ?: emptyList(),
+                    response.jsonMember3List ?: emptyList()
+                )
+                conjugationAdapter.notifyDataSetChanged()
+                layoutInitial.visibility = View.GONE
+                layoutResult.visibility = View.VISIBLE
+                hideLoading()
                 displayResult()
-                hideLoading()
-                Log.d("Fragment", "Received conjugation results: ${result.suggest}")
-
-                if (uniqueWordsToday.add(lastSearchedWord)) { // Add to unique words
-                    saveUniqueWordsToday()
-                    incrementXPIfEligible()
-                }
             } else {
-                binding.layoutInitial.visibility = View.VISIBLE
-                binding.layoutResult.visibility = View.GONE
+                Log.e("VerbConjugator", "No data received or error")
+                layoutInitial.visibility = View.GONE
+                layoutResult.visibility = View.VISIBLE
                 displayError()
-                Toast.makeText(requireContext(), "No Result Found", Toast.LENGTH_SHORT).show()
-                hideLoading()
-                recyclerView.visibility = View.VISIBLE
-                Log.d("Fragment", "No results found.")
+
             }
         })
-
 
 
         binding.helpSection.setOnClickListener {
