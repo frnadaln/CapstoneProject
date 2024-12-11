@@ -3,17 +3,35 @@ package com.capstone.arabicmorph.view.verbconjugator
 import android.util.Log
 import com.capstone.arabicmorph.data.ConjugatorResponse
 import com.capstone.arabicmorph.retrofit.ApiConfig
-import retrofit2.Response
 
 class ConjugatorRepository {
 
-    suspend fun getConjugationResults(verb: String, haraka: String = "u", transitive: Boolean = true): Response<ConjugatorResponse>? {
-        return try {
-            ApiConfig.apiService.getConjugation(verb, haraka, transitive)
+    suspend fun getConjugationResults(
+        verb: String,
+        haraka: String = "u",
+        transitive: Boolean = true,
+        onResult: (ConjugatorResponse?) -> Unit
+    ) {
+        try {
+            val apiService = ApiConfig.getApiService()
+            Log.d("Repository", "Calling API with verb: $verb, haraka: $haraka, transitive: $transitive")
+
+            val response = apiService.getConjugation(verb, haraka, transitive)
+            Log.d("Repository", "API Response: $response")
+            Log.d("Repository", "Raw Response: $response")
+            Log.d("Repository", "Suggest List: ${response.suggest}")
+
+            if (response.suggest.isNotEmpty()) {
+                onResult(response)
+            } else {
+                Log.e("ConjugatorRepository", "No results found.")
+                onResult(null)
+            }
         } catch (e: Exception) {
-            Log.e("ConjugatorRepository", "Error: ${e.localizedMessage}")
-            null
+            e.printStackTrace()
+            Log.e("ConjugatorRepository", "Error: ${e.message}")
+            onResult(null)
         }
     }
-
 }
+
