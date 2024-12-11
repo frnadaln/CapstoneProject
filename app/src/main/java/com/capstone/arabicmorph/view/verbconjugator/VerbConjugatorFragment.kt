@@ -8,6 +8,7 @@ import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -82,28 +83,36 @@ class VerbConjugatorFragment : Fragment() {
 
         startImageAnimation()
 
+        showInitialLayout()
 
-        // Handle search button click
         binding.searchButtonBackground.setOnClickListener {
             val searchText = binding.enterWord.text.toString().trim()
             if (searchText.isNotEmpty()) {
-                showLoading(true)
+                showLoading()
                 conjugatorViewModel.getConjugationResults(searchText)
             } else {
-                Toast.makeText(context, "Please enter a word to search", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, "Masukkan kata yang ingin dicari", Toast.LENGTH_SHORT).show()
             }
         }
 
-        // Handle API response
         conjugatorViewModel.conjugatorResponse.observe(viewLifecycleOwner) { response ->
-            showLoading(false) // Hide loading indicator after response
+            hideLoading()
 
-            response?.let {
-                displayResult(it.suggest) // Display conjugation results
-            } ?: run {
-                displayError("No results found") // Display error message
+            if (response != null) {
+                Log.d("API Response", response.toString())
+
+                val suggestItems = response.suggest
+                val jsonMember9List = response.jsonMember9List
+                val jsonMember3List = response.jsonMember3List
+
+                conjugationAdapter.submitList(suggestItems, jsonMember9List, jsonMember3List)
+
+                displayResult(suggestItems)
+            } else {
+                displayError("Tidak ada hasil ditemukan")
             }
         }
+
 
         binding.helpSection.setOnClickListener {
             val transaction = requireActivity().supportFragmentManager.beginTransaction()
@@ -112,6 +121,8 @@ class VerbConjugatorFragment : Fragment() {
                 .commit()
         }
 
+        showInitialLayout()
+
         return root
     }
 
@@ -119,21 +130,33 @@ class VerbConjugatorFragment : Fragment() {
         progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
     }
 
-    private fun displayResult(results: List<SuggestItem>) {
-        layoutInitial.visibility = View.GONE
-        layoutResult.visibility = View.VISIBLE
-
-        if (results.isNotEmpty()) {
-            conjugationAdapter.submitList(results)
-        } else {
-            Toast.makeText(context, "No results found", Toast.LENGTH_SHORT).show()
-        }
+    private fun displayResult(data: List<SuggestItem>) {
+        conjugationAdapter.submitList(data, emptyList(), emptyList())
+        binding.layoutResult.visibility = View.VISIBLE
+        binding.layoutInitial.visibility = View.GONE
     }
 
     private fun displayError(message: String) {
         layoutInitial.visibility = View.GONE
         layoutResult.visibility = View.VISIBLE
 
+        Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
+    }
+
+    private fun showLoading() {
+        binding.progressIndicator.visibility = View.VISIBLE
+    }
+
+    private fun hideLoading() {
+        binding.progressIndicator.visibility = View.GONE
+    }
+
+    private fun showInitialLayout() {
+        layoutInitial.visibility = View.VISIBLE
+        layoutResult.visibility = View.GONE
+    }
+
+    private fun showError(message: String) {
         Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
     }
 
