@@ -65,7 +65,6 @@ class VerbConjugatorFragment : Fragment() {
             adapter = conjugationAdapter
         }
 
-
         progressBar = binding.progressIndicator
         layoutInitial = binding.layoutInitial
         layoutResult = binding.layoutResult
@@ -88,7 +87,7 @@ class VerbConjugatorFragment : Fragment() {
         binding.searchButtonBackground.setOnClickListener {
             val searchText = binding.enterWord.text.toString().trim()
             if (searchText.isNotEmpty()) {
-                showLoading(true) // Show loading indicator
+                showLoading(true)
                 conjugatorViewModel.getConjugationResults(searchText)
             } else {
                 Toast.makeText(context, "Please enter a word to search", Toast.LENGTH_SHORT).show()
