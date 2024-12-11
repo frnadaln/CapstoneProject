@@ -33,6 +33,7 @@ class ConjugationAdapter : RecyclerView.Adapter<ConjugationAdapter.ConjugationVi
     }
 
     fun setData(
+
         suggestItems: List<SuggestItem>,
         jsonMember9List: List<JsonMember9>,
         jsonMember3List: List<JsonMember3>

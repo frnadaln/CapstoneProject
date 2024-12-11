@@ -6,7 +6,7 @@ import retrofit2.http.Query
 
 interface ApiService {
 
-    @GET("conjugator")
+    @GET("api")
     suspend fun getConjugation(
         @Query("verb") verb: String,
         @Query("haraka") haraka: String = "u",
