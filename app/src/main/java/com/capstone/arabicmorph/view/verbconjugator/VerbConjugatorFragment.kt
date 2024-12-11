@@ -91,7 +91,7 @@ class VerbConjugatorFragment : Fragment() {
                 showLoading()
                 conjugatorViewModel.getConjugationResults(searchText)
             } else {
-                Toast.makeText(context, "Masukkan kata yang ingin dicari", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, "Enter the word you want to search for", Toast.LENGTH_SHORT).show()
             }
         }
 
@@ -109,7 +109,7 @@ class VerbConjugatorFragment : Fragment() {
 
                 displayResult(suggestItems)
             } else {
-                displayError("Tidak ada hasil ditemukan")
+                displayError("No results found")
             }
         }
 

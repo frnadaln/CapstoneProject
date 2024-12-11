@@ -182,10 +182,17 @@ class JamidDetectorFragment : Fragment() {
             return
         }
 
+        val arabicRegex = Regex("^[\\u0600-\\u06FF\\u0750-\\u077F]+$")
+        if (!arabicRegex.matches(inputWord)) {
+            Toast.makeText(requireContext(), "Please enter a Fusha Arabic word", Toast.LENGTH_SHORT).show()
+            return
+        }
+
         lastSearchedWord = inputWord
         showLoading(true)
         viewModel.predictJamid(inputWord)
     }
+
 
 
     private fun savePredictionToHistory(inputText: String, prediction: String) {
