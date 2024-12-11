@@ -8,7 +8,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 
 object ApiConfig {
-    private const val BASE_URL = "http://api-arabic-505329085312.asia-southeast2.run.app/"
+    private const val BASE_URL = "https://api-arabic-505329085312.asia-southeast2.run.app/"
 
     fun getApiService(): ApiService {
         val loggingInterceptor = if (BuildConfig.DEBUG) {

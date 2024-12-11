@@ -49,6 +49,7 @@ class VerbConjugatorFragment : Fragment() {
 
     private val uniqueWordsToday: MutableSet<String> = mutableSetOf()
 
+    @RequiresApi(Build.VERSION_CODES.M)
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -90,12 +91,25 @@ class VerbConjugatorFragment : Fragment() {
 
         binding.searchButtonBackground.setOnClickListener {
             val searchText = binding.enterWord.text.toString().trim()
+
+            if (!isInternetAvailable(requireContext())) {
+                Toast.makeText(requireContext(), "No internet connection", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+
+            val arabicRegex = Regex("^[\\u0600-\\u06FF\\u0750-\\u077F]+$")
+            if (!arabicRegex.matches(searchText)) {
+                Toast.makeText(requireContext(), "Please enter a Fusha Arabic word", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+
             if (searchText.isNotEmpty()) {
                 showLoading()
                 conjugatorViewModel.getConjugationResults(searchText)
             } else {
-                Toast.makeText(context, "Masukkan kata yang ingin dicari", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, "Enter the word you want to search for", Toast.LENGTH_SHORT).show()
             }
+            lastSearchedWord = searchText
         }
 
         conjugatorViewModel.conjugationResult.observe(viewLifecycleOwner, Observer { result ->
@@ -108,15 +122,21 @@ class VerbConjugatorFragment : Fragment() {
                 displayResult()
                 hideLoading()
                 Log.d("Fragment", "Received conjugation results: ${result.suggest}")
+
+                if (uniqueWordsToday.add(lastSearchedWord)) { // Add to unique words
+                    saveUniqueWordsToday()
+                    incrementXPIfEligible()
+                }
             } else {
                 binding.layoutInitial.visibility = View.VISIBLE
                 binding.layoutResult.visibility = View.GONE
                 displayError()
-                Toast.makeText(requireContext(), "Tidak ada hasil ditemukan", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), "No Result Found", Toast.LENGTH_SHORT).show()
                 hideLoading()
                 Log.d("Fragment", "No results found.")
             }
         })
+
 
         binding.helpSection.setOnClickListener {
             val transaction = requireActivity().supportFragmentManager.beginTransaction()
