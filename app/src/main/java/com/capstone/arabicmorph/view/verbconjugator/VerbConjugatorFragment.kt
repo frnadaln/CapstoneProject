@@ -127,7 +127,8 @@ class VerbConjugatorFragment : Fragment() {
     }
 
     private fun showLoading(isLoading: Boolean) {
-        progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
+        binding.progressIndicator.visibility = if (isLoading) View.VISIBLE else View.GONE
+        binding.layoutInitial.visibility = if (isLoading) View.GONE else View.VISIBLE
     }
 
     private fun displayResult(data: List<SuggestItem>) {
