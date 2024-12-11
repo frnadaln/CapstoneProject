@@ -18,10 +18,10 @@ import android.widget.RelativeLayout
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.capstone.arabicmorph.R
+import com.capstone.arabicmorph.data.SuggestItem
 import com.capstone.arabicmorph.databinding.FragmentVerbConjugatorBinding
 import com.capstone.arabicmorph.gamification.DailyChallengeScheduler
 import com.capstone.arabicmorph.gamification.util.NotificationUtils
@@ -85,38 +85,34 @@ class VerbConjugatorFragment : Fragment() {
 
         showInitialLayout()
 
-        layoutResult.visibility = View.GONE
-        progressBar.visibility = View.GONE
-
         binding.searchButtonBackground.setOnClickListener {
             val searchText = binding.enterWord.text.toString().trim()
             if (searchText.isNotEmpty()) {
                 showLoading()
                 conjugatorViewModel.getConjugationResults(searchText)
             } else {
-                Toast.makeText(context, "Masukkan kata yang ingin dicari", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, "Enter the word you want to search for", Toast.LENGTH_SHORT).show()
             }
         }
 
-        conjugatorViewModel.conjugationResult.observe(viewLifecycleOwner, Observer { result ->
-            if (result != null) {
-                binding.layoutInitial.visibility = View.GONE
-                binding.layoutResult.visibility = View.VISIBLE
-                progressBar.visibility = View.GONE
-                conjugationAdapter.setData(result.suggest, result.jsonMember9List, result.jsonMember3List)
-                showLoading()
-                displayResult()
-                hideLoading()
-                Log.d("Fragment", "Received conjugation results: ${result.suggest}")
+        conjugatorViewModel.conjugatorResponse.observe(viewLifecycleOwner) { response ->
+            hideLoading()
+
+            if (response != null) {
+                Log.d("API Response", response.toString())
+
+                val suggestItems = response.suggest
+                val jsonMember9List = response.jsonMember9List
+                val jsonMember3List = response.jsonMember3List
+
+                conjugationAdapter.submitList(suggestItems, jsonMember9List, jsonMember3List)
+
+                displayResult(suggestItems)
             } else {
-                binding.layoutInitial.visibility = View.VISIBLE
-                binding.layoutResult.visibility = View.GONE
-                displayError()
-                Toast.makeText(requireContext(), "Tidak ada hasil ditemukan", Toast.LENGTH_SHORT).show()
-                hideLoading()
-                Log.d("Fragment", "No results found.")
+                displayError("No results found")
             }
-        })
+        }
+
 
         binding.helpSection.setOnClickListener {
             val transaction = requireActivity().supportFragmentManager.beginTransaction()
@@ -125,27 +121,27 @@ class VerbConjugatorFragment : Fragment() {
                 .commit()
         }
 
+        showInitialLayout()
+
         return root
     }
 
-    private fun displayResult() {
-        binding.apply {
-            layoutInitial.visibility = View.GONE
-            layoutResult.visibility = View.VISIBLE
-
-            resultsRecyclerView.visibility = View.VISIBLE
-            resultErrorText.visibility = View.GONE
-        }
+    private fun showLoading(isLoading: Boolean) {
+        binding.progressIndicator.visibility = if (isLoading) View.VISIBLE else View.GONE
+        binding.layoutInitial.visibility = if (isLoading) View.GONE else View.VISIBLE
     }
 
-    private fun displayError() {
-        binding.apply {
-            layoutInitial.visibility = View.GONE
-            layoutResult.visibility = View.VISIBLE
+    private fun displayResult(data: List<SuggestItem>) {
+        conjugationAdapter.submitList(data, emptyList(), emptyList())
+        binding.layoutResult.visibility = View.VISIBLE
+        binding.layoutInitial.visibility = View.GONE
+    }
 
-            resultsRecyclerView.visibility = View.GONE
-            resultErrorText.visibility = View.VISIBLE
-        }
+    private fun displayError(message: String) {
+        layoutInitial.visibility = View.GONE
+        layoutResult.visibility = View.VISIBLE
+
+        Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
     }
 
     private fun showLoading() {
@@ -159,7 +155,6 @@ class VerbConjugatorFragment : Fragment() {
     private fun showInitialLayout() {
         layoutInitial.visibility = View.VISIBLE
         layoutResult.visibility = View.GONE
-        progressBar.visibility = View.GONE
     }
 
     private fun showError(message: String) {

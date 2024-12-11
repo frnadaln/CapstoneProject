@@ -1,6 +1,5 @@
 package com.capstone.arabicmorph.view.verbconjugator
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -10,15 +9,31 @@ import kotlinx.coroutines.launch
 
 class ConjugatorViewModel(private val repository: ConjugatorRepository) : ViewModel() {
 
-    private val _conjugationResult = MutableLiveData<ConjugatorResponse?>()
-    val conjugationResult: LiveData<ConjugatorResponse?> = _conjugationResult
+    private val _conjugatorResponse = MutableLiveData<ConjugatorResponse>()
+    val conjugatorResponse: LiveData<ConjugatorResponse> = _conjugatorResponse
 
-    fun getConjugationResults(verb: String, haraka: String = "u", transitive: Boolean = true) {
+    private val _isLoading = MutableLiveData<Boolean>()
+    val isLoading: LiveData<Boolean> = _isLoading
+
+    private val _errorMessage = MutableLiveData<String?>()
+    val errorMessage: LiveData<String?> = _errorMessage
+
+    fun getConjugationResults(verb: String) {
         viewModelScope.launch {
-            Log.d("ViewModel", "Calling getConjugationResults with verb: $verb")
-            repository.getConjugationResults(verb, haraka, transitive) { result ->
-                Log.d("ViewModel", "Result from repository: $result")
-                _conjugationResult.postValue(result)  // Update LiveData with the result
+            _isLoading.value = true // Emit loading state
+            try {
+                val response = repository.getConjugationResults(verb)
+                if (response != null) {
+                    if (response.isSuccessful) {
+                        _conjugatorResponse.value = response.body()
+                    } else {
+                        _errorMessage.value = "Error: ${response.message()}"
+                    }
+                }
+            } catch (e: Exception) {
+                _errorMessage.value = "Exception: ${e.message}"
+            } finally {
+                _isLoading.value = false // Stop loading state
             }
         }
     }
