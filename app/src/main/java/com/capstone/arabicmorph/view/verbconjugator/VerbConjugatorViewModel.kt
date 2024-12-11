@@ -1,5 +1,6 @@
 package com.capstone.arabicmorph.view.verbconjugator
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -9,18 +10,15 @@ import kotlinx.coroutines.launch
 
 class ConjugatorViewModel(private val repository: ConjugatorRepository) : ViewModel() {
 
-    private val _conjugatorResponse = MutableLiveData<ConjugatorResponse>()
-    val conjugatorResponse: LiveData<ConjugatorResponse> = _conjugatorResponse
+    private val _conjugationResult = MutableLiveData<ConjugatorResponse?>()
+    val conjugationResult: LiveData<ConjugatorResponse?> = _conjugationResult
 
-    fun getConjugationResults(verb: String) {
+    fun getConjugationResults(verb: String, haraka: String = "u", transitive: Boolean = true) {
         viewModelScope.launch {
-            try {
-                val response = repository.getConjugationResults(verb)
-                if (response.isSuccessful) {
-                    _conjugatorResponse.value = response.body()
-                }
-            } catch (e: Exception) {
-                //
+            Log.d("ViewModel", "Calling getConjugationResults with verb: $verb")
+            repository.getConjugationResults(verb, haraka, transitive) { result ->
+                Log.d("ViewModel", "Result from repository: $result")
+                _conjugationResult.postValue(result)  // Update LiveData with the result
             }
         }
     }
