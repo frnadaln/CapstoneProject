@@ -1,6 +1,5 @@
 package com.capstone.arabicmorph.retrofit
 
-import android.util.Log
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -26,7 +25,6 @@ object ApiConfig {
             .build()
 
         val apiService = retrofit.create(ApiService::class.java)
-        Log.d("API Config", "ApiService created: $apiService")
         return apiService
     }
 

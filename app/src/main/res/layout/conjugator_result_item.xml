@@ -25,7 +25,7 @@
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="50dp"
-            android:text="Result"
+            android:text="@string/result"
             android:textSize="24sp"
             android:textColor="@color/text_primary"
             android:textStyle="bold" />
@@ -36,7 +36,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/result_title"
             android:layout_marginTop="16dp"
-            android:text="Verb Info:"
+            android:text="@string/verb_info"
             android:textSize="14sp"
             android:layout_marginStart="10dp"
             android:textColor="@android:color/black" />
@@ -72,7 +72,7 @@
                     android:gravity="center"
                     android:background="@drawable/rectangle_column"
                     android:padding="4dp"
-                    android:text="Madhi"
+                    android:text="@string/madhi"
                     android:textStyle="bold"
                     android:textSize="16sp"
                     android:textColor="@android:color/black" />
@@ -85,7 +85,7 @@
                     android:gravity="center"
                     android:background="@drawable/rectangle_column"
                     android:padding="4dp"
-                    android:text="Mudhori"
+                    android:text="@string/mudhori"
                     android:textStyle="bold"
                     android:textSize="16sp"
                     android:textColor="@android:color/black" />
@@ -98,7 +98,7 @@
                     android:gravity="center"
                     android:background="@drawable/rectangle_column"
                     android:padding="4dp"
-                    android:text="Amar"
+                    android:text="@string/amar"
                     android:textStyle="bold"
                     android:textSize="16sp"
                     android:textColor="@android:color/black" />
@@ -144,30 +144,17 @@
         </TableLayout>
 
         <TableLayout
-            android:id="@+id/verb_future_table"
+            android:id="@+id/suggest_table"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="4dp"
             android:layout_below="@id/conjugation_table"
             android:layout_marginTop="20dp"
-            android:stretchColumns="1">
+            android:stretchColumns="1" >
 
             <TableRow
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
-
-                <TextView
-                    android:id="@+id/verb_label"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:background="@drawable/rectangle_column"
-                    android:padding="4dp"
-                    android:text="Verb"
-                    android:textStyle="bold"
-                    android:textSize="16sp"
-                    android:textColor="@android:color/black" />
 
                 <TextView
                     android:id="@+id/future_label"
@@ -175,12 +162,51 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="center"
-                    android:background="@drawable/rectangle_column"
                     android:padding="4dp"
-                    android:text="Future"
-                    android:textStyle="bold"
+                    android:text="@string/future"
+                    android:background="@drawable/rectangle_column"
+                    android:textColor="@color/text_primary"
                     android:textSize="16sp"
-                    android:textColor="@android:color/black" />
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/haraka_label"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:padding="4dp"
+                    android:text="@string/haraka"
+                    android:background="@drawable/rectangle_column"
+                    android:textColor="@color/text_primary"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/transitive_label"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:padding="4dp"
+                    android:text="@string/transitive"
+                    android:background="@drawable/rectangle_column"
+                    android:textColor="@color/text_primary"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/verb_label"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:padding="4dp"
+                    android:text="@string/verb"
+                    android:background="@drawable/rectangle_column"
+                    android:textColor="@color/text_primary"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
             </TableRow>
 
             <TableRow
@@ -188,28 +214,195 @@
                 android:layout_height="wrap_content">
 
                 <TextView
-                    android:id="@+id/verbText"
+                    android:id="@+id/futureText1"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="center"
-                    android:background="@drawable/rectangle_column"
                     android:padding="4dp"
-                    android:textSize="14sp"
-                    android:textColor="@android:color/black" />
+                    android:background="@drawable/rectangle_column"
+                    android:textColor="@color/text_primary"
+                    android:textSize="14sp" />
 
                 <TextView
-                    android:id="@+id/futureText"
+                    android:id="@+id/harakaText1"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="center"
-                    android:background="@drawable/rectangle_column"
                     android:padding="4dp"
-                    android:textSize="14sp"
-                    android:textColor="@android:color/black" />
+                    android:background="@drawable/rectangle_column"
+                    android:textColor="@color/text_primary"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/transitiveText1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:padding="4dp"
+                    android:background="@drawable/rectangle_column"
+                    android:textColor="@color/text_primary"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/verbText1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:padding="4dp"
+                    android:background="@drawable/rectangle_column"
+                    android:textColor="@color/text_primary"
+                    android:textSize="14sp" />
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/futureText2"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:padding="4dp"
+                    android:background="@drawable/rectangle_column"
+                    android:textColor="@color/text_primary"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/harakaText2"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:padding="4dp"
+                    android:background="@drawable/rectangle_column"
+                    android:textColor="@color/text_primary"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/transitiveText2"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:padding="4dp"
+                    android:background="@drawable/rectangle_column"
+                    android:textColor="@color/text_primary"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/verbText2"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:padding="4dp"
+                    android:background="@drawable/rectangle_column"
+                    android:textColor="@color/text_primary"
+                    android:textSize="14sp" />
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/futureText3"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:padding="4dp"
+                    android:background="@drawable/rectangle_column"
+                    android:textColor="@color/text_primary"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/harakaText3"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:padding="4dp"
+                    android:background="@drawable/rectangle_column"
+                    android:textColor="@color/text_primary"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/transitiveText3"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:padding="4dp"
+                    android:background="@drawable/rectangle_column"
+                    android:textColor="@color/text_primary"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/verbText3"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:padding="4dp"
+                    android:background="@drawable/rectangle_column"
+                    android:textColor="@color/text_primary"
+                    android:textSize="14sp" />
+            </TableRow>
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/futureText4"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:padding="4dp"
+                    android:background="@drawable/rectangle_column"
+                    android:textColor="@color/text_primary"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/harakaText4"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:padding="4dp"
+                    android:background="@drawable/rectangle_column"
+                    android:textColor="@color/text_primary"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/transitiveText4"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:padding="4dp"
+                    android:background="@drawable/rectangle_column"
+                    android:textColor="@color/text_primary"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/verbText4"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:padding="4dp"
+                    android:background="@drawable/rectangle_column"
+                    android:textColor="@color/text_primary"
+                    android:textSize="14sp" />
             </TableRow>
         </TableLayout>
-
     </RelativeLayout>
 </FrameLayout>

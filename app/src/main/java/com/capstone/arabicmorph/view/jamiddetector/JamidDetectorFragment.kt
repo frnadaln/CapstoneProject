@@ -5,7 +5,6 @@ import android.animation.ObjectAnimator
 import android.annotation.SuppressLint
 import android.content.SharedPreferences
 import android.os.Bundle
-import android.util.Log
 import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
@@ -207,8 +206,6 @@ class JamidDetectorFragment : Fragment() {
 
     private fun observeViewModel() {
         viewModel.result.observe(viewLifecycleOwner) { result ->
-            Log.d("JamidDetectorFragment", "Result received: $result")
-
             if (result == null) return@observe
 
             result.fold(
@@ -216,7 +213,7 @@ class JamidDetectorFragment : Fragment() {
                     showLoading(false)
                     displayResult(it.text, it.prediction)
 
-                    if (uniqueWordsToday.add(it.text)) { // Add to unique words
+                    if (uniqueWordsToday.add(it.text)) {
                         saveUniqueWordsToday()
                         incrementXPIfEligible()
                     }

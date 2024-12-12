@@ -4,16 +4,13 @@ import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.capstone.arabicmorph.data.JsonMember3
-import com.capstone.arabicmorph.data.JsonMember9
 import com.capstone.arabicmorph.data.SuggestItem
 import com.capstone.arabicmorph.databinding.ConjugatorResultItemBinding
 
 class ConjugationAdapter : RecyclerView.Adapter<ConjugationAdapter.ConjugationViewHolder>() {
 
     private var suggestItems: List<SuggestItem> = emptyList()
-    private var jsonMember9List: List<JsonMember9> = emptyList()
-    private var jsonMember3List: List<JsonMember3> = emptyList()
+    private var result: Map<String, Map<String, String>> = emptyMap()
     private var verbInfo: String = ""
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ConjugationViewHolder {
@@ -23,11 +20,8 @@ class ConjugationAdapter : RecyclerView.Adapter<ConjugationAdapter.ConjugationVi
     }
 
     override fun onBindViewHolder(holder: ConjugationViewHolder, position: Int) {
-        val suggestItem = suggestItems[position]
-        val jsonMember9 = jsonMember9List.getOrNull(position)
-        val jsonMember3 = jsonMember3List.getOrNull(position)
-
-        holder.bind(suggestItem, jsonMember9, jsonMember3)
+        suggestItems[position]
+        holder.bind(result)
     }
 
     override fun getItemCount(): Int {
@@ -38,44 +32,47 @@ class ConjugationAdapter : RecyclerView.Adapter<ConjugationAdapter.ConjugationVi
     fun setData(
         verbInfo: String,
         suggestItems: List<SuggestItem>?,
-        jsonMember9List: List<JsonMember9>?,
-        jsonMember3List: List<JsonMember3>?
+        result: Map<String, Map<String, String>>?
     ) {
         this.verbInfo = verbInfo
         this.suggestItems = suggestItems ?: emptyList()
-        this.jsonMember9List = jsonMember9List ?: emptyList()
-        this.jsonMember3List = jsonMember3List ?: emptyList()
+        this.result = result ?: emptyMap()
 
-        notifyDataSetChanged()
-    }
-
-    @SuppressLint("NotifyDataSetChanged")
-    fun setDataJson(jsonMember9List: List<JsonMember9>?) {
-        this.jsonMember9List = jsonMember9List ?: emptyList()
         notifyDataSetChanged()
     }
 
     inner class ConjugationViewHolder(private val binding: ConjugatorResultItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(suggestItem: SuggestItem, jsonMember9: JsonMember9?, jsonMember3: JsonMember3?) {
+        fun bind(result: Map<String, Map<String, String>>) {
             binding.verbInfo.text = verbInfo.ifEmpty { "-" }
-            binding.verbText.text = suggestItem.verb
-            binding.futureText.text = suggestItem.future
 
-            jsonMember9?.let {
-                binding.madhiText.text = it.jsonMember1 ?: "-"
-                binding.mudhoriText.text = it.jsonMember2 ?: "-"
-            } ?: run {
-                binding.madhiText.text = "-"
-                binding.mudhoriText.text = "-"
-            }
+            val jsonMember9 = result["9"]
+            val jsonMember3 = result["3"]
 
-            jsonMember3?.let {
-                binding.amarText.text = it.jsonMember6 ?: "-"
-            } ?: run {
-                binding.amarText.text = "-"
-            }
+            binding.madhiText.text = jsonMember9?.get("1") ?: "-"
+            binding.mudhoriText.text = jsonMember9?.get("2") ?: "-"
+            binding.amarText.text = jsonMember3?.get("6") ?: "-"
+
+            binding.futureText1.text = suggestItems.getOrNull(0)?.future ?: "-"
+            binding.harakaText1.text = suggestItems.getOrNull(0)?.haraka ?: "-"
+            binding.transitiveText1.text = suggestItems.getOrNull(0)?.transitive.toString()
+            binding.verbText1.text = suggestItems.getOrNull(0)?.verb ?: "-"
+
+            binding.futureText2.text = suggestItems.getOrNull(1)?.future ?: "-"
+            binding.harakaText2.text = suggestItems.getOrNull(1)?.haraka ?: "-"
+            binding.transitiveText2.text = suggestItems.getOrNull(1)?.transitive.toString()
+            binding.verbText2.text = suggestItems.getOrNull(1)?.verb ?: "-"
+
+            binding.futureText3.text = suggestItems.getOrNull(2)?.future ?: "-"
+            binding.harakaText3.text = suggestItems.getOrNull(2)?.haraka ?: "-"
+            binding.transitiveText3.text = suggestItems.getOrNull(2)?.transitive.toString()
+            binding.verbText3.text = suggestItems.getOrNull(2)?.verb ?: "-"
+
+            binding.futureText4.text = suggestItems.getOrNull(3)?.future ?: "-"
+            binding.harakaText4.text = suggestItems.getOrNull(3)?.haraka ?: "-"
+            binding.transitiveText4.text = suggestItems.getOrNull(3)?.transitive.toString()
+            binding.verbText4.text = suggestItems.getOrNull(3)?.verb ?: "-"
         }
     }
 }

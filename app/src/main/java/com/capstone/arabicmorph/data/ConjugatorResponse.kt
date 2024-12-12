@@ -13,11 +13,16 @@ data class ConjugatorResponse(
 	@field:SerializedName("suggest")
 	val suggest: List<SuggestItem>?,
 
-	@field:SerializedName("json_member_9_list")
-	val jsonMember9List: List<JsonMember9>,
+	@field:SerializedName("result")
+	val result: Map<String, Map<String, String>>?
 
-	@field:SerializedName("json_member_3_list")
-	val jsonMember3List: List<JsonMember3>
+) : Parcelable
+
+
+@Parcelize
+data class Result(
+	val jsonMember3: JsonMember3,
+	val jsonMember9: JsonMember9,
 ) : Parcelable
 
 @Parcelize

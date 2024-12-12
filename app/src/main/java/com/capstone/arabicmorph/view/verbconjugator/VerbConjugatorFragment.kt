@@ -9,7 +9,6 @@ import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -128,12 +127,10 @@ class VerbConjugatorFragment : Fragment() {
 
         conjugatorViewModel.conjugationResult.observe(viewLifecycleOwner, Observer { response ->
             if (response != null) {
-                Log.d("VerbConjugator", "API response: $response")
                 conjugationAdapter.setData(
-                    response.verbInfo ?: "",
+                    response.verbInfo,
                     response.suggest ?: emptyList(),
-                    response.jsonMember9List ?: emptyList(),
-                    response.jsonMember3List ?: emptyList()
+                    response.result ?: emptyMap()
                 )
                 conjugationAdapter.notifyDataSetChanged()
                 layoutInitial.visibility = View.GONE
@@ -146,7 +143,6 @@ class VerbConjugatorFragment : Fragment() {
                     incrementXPIfEligible()
                 }
             } else {
-                Log.e("VerbConjugator", "No data received or error")
                 layoutInitial.visibility = View.GONE
                 layoutResult.visibility = View.VISIBLE
                 displayError()
@@ -196,10 +192,6 @@ class VerbConjugatorFragment : Fragment() {
         layoutInitial.visibility = View.VISIBLE
         layoutResult.visibility = View.GONE
         progressBar.visibility = View.GONE
-    }
-
-    private fun showError(message: String) {
-        Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
     }
 
     private fun loadUniqueWordsToday() {
@@ -274,4 +266,3 @@ class VerbConjugatorFragment : Fragment() {
         animatorSet.start()
     }
 }
-

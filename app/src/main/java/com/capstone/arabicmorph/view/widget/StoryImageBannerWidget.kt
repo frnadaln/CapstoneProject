@@ -33,7 +33,7 @@ class StoryImageBannerWidget : AppWidgetProvider() {
     override fun onReceive(context: Context?, intent: Intent?) {
         super.onReceive(context, intent)
         if (intent != null && intent.action == ACTION) {
-            val clickedItem = intent.getStringExtra(EXTRA_ITEM)
+            intent.getStringExtra(EXTRA_ITEM)
         }
     }
 

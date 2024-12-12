@@ -13,10 +13,6 @@ class HistoryRepository (context: Context) {
         return historyDao.getPredictHistory()
     }
 
-    suspend fun insertPredictHistory(history: HistoryEntity) {
-        historyDao.insertPredictHistory(listOf(history))
-    }
-
     suspend fun deletePredictHistory(history: HistoryEntity) {
         historyDao.deletePredictHistory(history)
     }

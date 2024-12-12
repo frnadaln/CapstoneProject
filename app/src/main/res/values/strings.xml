@@ -69,5 +69,14 @@
     <string name="delete">Delete history</string>
     <string name="save">Save to History</string>
     <string name="prediction_label">Jamid Detector Result</string>
+    <string name="result">Result</string>
+    <string name="verb_info">Verb Info:</string>
+    <string name="madhi">Madhi</string>
+    <string name="mudhori">Mudhori</string>
+    <string name="amar">Amar</string>
+    <string name="future">Future</string>
+    <string name="haraka">Haraka</string>
+    <string name="transitive">Transitive</string>
+    <string name="verb">Verb</string>
 
 </resources>
