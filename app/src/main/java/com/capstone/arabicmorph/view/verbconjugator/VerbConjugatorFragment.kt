@@ -132,8 +132,7 @@ class VerbConjugatorFragment : Fragment() {
                 conjugationAdapter.setData(
                     response.verbInfo ?: "",
                     response.suggest ?: emptyList(),
-                    response.jsonMember9List ?: emptyList(),
-                    response.jsonMember3List ?: emptyList()
+                    response.result ?: emptyMap()
                 )
                 conjugationAdapter.notifyDataSetChanged()
                 layoutInitial.visibility = View.GONE
