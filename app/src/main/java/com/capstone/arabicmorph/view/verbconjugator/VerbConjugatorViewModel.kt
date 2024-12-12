@@ -16,7 +16,7 @@ class ConjugatorViewModel(private val repository: ConjugatorRepository) : ViewMo
     fun getConjugationResults(haraka: String = "u", transitive: Int = 1) {
         viewModelScope.launch {
             Log.d("ViewModel", "Calling getConjugationResults with verb")
-            repository.getConjugationResults( haraka, transitive.toString()) { result ->
+            repository.getConjugationResults(haraka, transitive.toString()) { result ->
                 Log.d("ViewModel", "Result from repository: $result")
                 _conjugationResult.postValue(result)
             }

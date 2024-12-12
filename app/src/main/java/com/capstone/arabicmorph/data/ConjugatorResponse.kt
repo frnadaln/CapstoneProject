@@ -40,15 +40,15 @@ data class SuggestItem(
 data class JsonMember3(
 
 	@field:SerializedName("6")
-	val json6: String?
+	val jsonMember6: String?
 ) : Parcelable
 
 @Parcelize
 data class JsonMember9(
 
 	@field:SerializedName("1")
-	val json1: String?,
+	val jsonMember1: String?,
 
 	@field:SerializedName("2")
-	val json2: String?
+	val jsonMember2: String?
 ) : Parcelable
