@@ -14,6 +14,7 @@ class ConjugationAdapter : RecyclerView.Adapter<ConjugationAdapter.ConjugationVi
     private var suggestItems: List<SuggestItem> = emptyList()
     private var jsonMember9List: List<JsonMember9> = emptyList()
     private var jsonMember3List: List<JsonMember3> = emptyList()
+    private var verbInfo: String = ""
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ConjugationViewHolder {
         val inflater = LayoutInflater.from(parent.context)
@@ -35,10 +36,12 @@ class ConjugationAdapter : RecyclerView.Adapter<ConjugationAdapter.ConjugationVi
 
     @SuppressLint("NotifyDataSetChanged")
     fun setData(
+        verbInfo: String,
         suggestItems: List<SuggestItem>?,
         jsonMember9List: List<JsonMember9>?,
         jsonMember3List: List<JsonMember3>?
     ) {
+        this.verbInfo = verbInfo
         this.suggestItems = suggestItems ?: emptyList()
         this.jsonMember9List = jsonMember9List ?: emptyList()
         this.jsonMember3List = jsonMember3List ?: emptyList()
@@ -56,9 +59,9 @@ class ConjugationAdapter : RecyclerView.Adapter<ConjugationAdapter.ConjugationVi
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(suggestItem: SuggestItem, jsonMember9: JsonMember9?, jsonMember3: JsonMember3?) {
+            binding.verbInfo.text = verbInfo.ifEmpty { "-" }
             binding.verbText.text = suggestItem.verb
-            binding.harakaText.text = suggestItem.haraka
-            binding.transitiveText.text = suggestItem.transitive.toString()
+            binding.futureText.text = suggestItem.future
 
             jsonMember9?.let {
                 binding.madhiText.text = it.jsonMember1 ?: "-"

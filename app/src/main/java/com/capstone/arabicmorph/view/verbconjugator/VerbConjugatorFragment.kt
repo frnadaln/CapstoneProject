@@ -2,6 +2,7 @@ package com.capstone.arabicmorph.view.verbconjugator
 
 import android.animation.AnimatorSet
 import android.animation.ObjectAnimator
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.SharedPreferences
 import android.net.ConnectivityManager
@@ -51,6 +52,7 @@ class VerbConjugatorFragment : Fragment() {
 
     private val uniqueWordsToday: MutableSet<String> = mutableSetOf()
 
+    @SuppressLint("NotifyDataSetChanged")
     @RequiresApi(Build.VERSION_CODES.M)
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -124,37 +126,33 @@ class VerbConjugatorFragment : Fragment() {
             lastSearchedWord = searchText
         }
 
-        conjugatorViewModel.conjugationResult.observe(viewLifecycleOwner, Observer { result ->
-            if (result != null) {
-                binding.layoutInitial.visibility = View.GONE
-                binding.layoutResult.visibility = View.VISIBLE
-                progressBar.visibility = View.GONE
-                result.suggest?.let {
-                    conjugationAdapter.setData(it, result.jsonMember9List, result.jsonMember3List)
-                }
-                result.jsonMember9List?.let { conjugationAdapter.setDataJson(it) } // Memanggil setDataJson
-
-                showLoading()
-                displayResult()
+        conjugatorViewModel.conjugationResult.observe(viewLifecycleOwner, Observer { response ->
+            if (response != null) {
+                Log.d("VerbConjugator", "API response: $response")
+                conjugationAdapter.setData(
+                    response.verbInfo ?: "",
+                    response.suggest ?: emptyList(),
+                    response.jsonMember9List ?: emptyList(),
+                    response.jsonMember3List ?: emptyList()
+                )
+                conjugationAdapter.notifyDataSetChanged()
+                layoutInitial.visibility = View.GONE
+                layoutResult.visibility = View.VISIBLE
                 hideLoading()
-                Log.d("Fragment", "Received conjugation results: ${result.suggest}")
+                displayResult()
 
-                if (uniqueWordsToday.add(lastSearchedWord)) { // Add to unique words
+                if (uniqueWordsToday.add(lastSearchedWord)) {
                     saveUniqueWordsToday()
                     incrementXPIfEligible()
                 }
             } else {
-                binding.layoutInitial.visibility = View.VISIBLE
-                binding.layoutResult.visibility = View.GONE
+                Log.e("VerbConjugator", "No data received or error")
+                layoutInitial.visibility = View.GONE
+                layoutResult.visibility = View.VISIBLE
                 displayError()
-                Toast.makeText(requireContext(), "No Result Found", Toast.LENGTH_SHORT).show()
                 hideLoading()
-                recyclerView.visibility = View.VISIBLE
-                Log.d("Fragment", "No results found.")
             }
         })
-
-
 
         binding.helpSection.setOnClickListener {
             val transaction = requireActivity().supportFragmentManager.beginTransaction()
@@ -165,8 +163,6 @@ class VerbConjugatorFragment : Fragment() {
 
         return root
     }
-
-
 
     private fun displayResult() {
         binding.apply {
